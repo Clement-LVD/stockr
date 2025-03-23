@@ -4,14 +4,16 @@
 \alias{fetch_historic}
 \title{Fetch historical financial data indices}
 \usage{
-fetch_historic(symbols = c("SAAB-B.ST"), wait.time = 0, .verbose = T)
+fetch_historic(symbols = c("SAAB-B.ST"), wait.time = 0, .verbose = T, ...)
 }
 \arguments{
 \item{symbols}{\code{character} A character string representing the indices to search for.}
 
 \item{wait.time}{\code{double} A character string representing the indices to search for.}
 
-\item{.verbose}{\code{logical}, default = \code{TRUE}. If \code{TRUE}, send messages to the console}
+\item{.verbose}{\code{logical}, default = \code{TRUE}. If \code{TRUE}, send messages to the console.}
+
+\item{...}{Parameters passed to \code{get_yahoo_data} such as the \code{interval} between two lines, a start_date or end_date}
 }
 \value{
 A data frame with columns:
@@ -30,10 +32,18 @@ A data frame with columns:
 \item \code{fullexchangename}: The full name of the financial place
 \item \code{timezone}: The timezone, e.g., 'CET' for Central European Time
 }
+
+This \code{data.frame} have additional attributes :
+\itemize{
+\item \code{fetch.symbols}: the symbols originally asked by the user
+\item \code{fetch.date}: the date when data are retrieved
+\item \code{fetch.currencies}: the currencies within the \code{data.frame}
+\item \code{n.currencies}: the number of currencies within the \code{data.frame}
+}
 }
 \description{
-Given indices names, the function retrieves historical stock market data
-(from finance.yahoo.com by default). Answer a \code{data.frame} with standardized colnames.
+Given indices names (i.e. ticker symbol), the function retrieves historical stock market data
+from finance.yahoo.com. Answer a \code{data.frame} with standardized colnames.
 }
 \examples{
 datas <- fetch_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )

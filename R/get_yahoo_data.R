@@ -99,8 +99,7 @@ warning(immediate. = T, "Only one symbol should be passed and you have indicated
     return(NULL) # non existent value
   })
 
-  if(is.na(connection)) {warning(immediate. = T,
-                                 "The value is not associated with a valid currency name !\n=> "
+  if(is.na(connection)) {cat("The value is not associated with a valid currency name !\n=> "
                                  , symbol, " is not a valid name, according to the Yahoo Finance API.
 See : https://finance.yahoo.com/ for valid names")
     return(NA)
