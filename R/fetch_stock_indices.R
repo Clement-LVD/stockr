@@ -8,6 +8,7 @@
 #' , exchange marketplace name and initially searched companies names.
 #'
 #' @param names A character string representing the company name to search for.
+#' @param marketplaces (optionnal) A character string representing the marketplace(s) to consider. Default keep all the marketplace
 #' @return A data frame with columns:
 #' 	- `Symbol`: The stock ticker symbol from yahoo
 #' 	- `Name`: The full company name.
@@ -17,11 +18,11 @@
 #' 	- `Exchange`: The stock exchange place for this stock.
 #'  - `searched`: The original names searched
 #' @examples
-#' fetch_stock_indices(names = c("VOLVO", "SAAB") )
+#' fetch_stock_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO"  )
 #' @importFrom XML readHTMLTable
 #' @importFrom utils URLencode
 #' @export
-fetch_stock_indices <- function(names) {
+fetch_stock_indices <- function(names, marketplaces = NULL) {
 base_url = "https://finance.yahoo.com/lookup/equity/?s="
   #0-A) construire une url valide
 
@@ -37,6 +38,8 @@ base_url = "https://finance.yahoo.com/lookup/equity/?s="
         # Appeler la fonction pour chaque terme et renvoyer le résultat
         fetch_stock_indices(name)
       }))
+
+if(!is.null(marketplaces) ) {results <- results[which(results$exchange %in% marketplaces), ]}
 
       # Afficher le résultat final
       return(unique(results))
@@ -60,6 +63,9 @@ if (!is.null(tables) && length(tables) > 0) {
 } else {
   table  <- NULL
 }
+
+colnames(table) <- trimws(tolower(colnames(table)))
+
 return(unique(table))
 }
 

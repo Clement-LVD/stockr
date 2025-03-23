@@ -4,10 +4,12 @@
 \alias{fetch_stock_indices}
 \title{Fetch stock indices based on a company name}
 \usage{
-fetch_stock_indices(names)
+fetch_stock_indices(names, marketplaces = NULL)
 }
 \arguments{
 \item{names}{A character string representing the company name to search for.}
+
+\item{marketplaces}{(optionnal) A character string representing the marketplace(s) to consider. Default keep all the marketplace}
 }
 \value{
 A data frame with columns:
