@@ -1,10 +1,10 @@
 Package: stockr
-Title: Get stock indices from companies names (yahoo datas)
+Title: Retrieve Data from Yahoo Finance API
 Version: 0.0.0.9000
 Authors@R:
     person("Clément", "Laverdet", , "clementlvd@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-4466-3394"))
-Description: Get stock indices from companies names (yahoo datas).
+Description: Retrieve financial data from the Yahoo Finance API, given company names or stock 'ticker' symbols.
 License: MIT + file LICENSE
 URL: https://github.com/clement-LVD/stockr,
     https://clement-lvd.github.io/stockr/

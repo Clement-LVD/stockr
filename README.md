@@ -11,18 +11,11 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/stockr)](https://CRAN.R-project.org/package=stockr)
 <!-- badges: end -->
 
-`stockr` is an R package that offers an efficient standardized approach
-to retrieve financial data.
+`stockr` is an R package that retrieve financial data from the Yahoo
+Finance API, given company names or stock ‘ticker’ symbols.
 
-Data are fetched from the Yahoo Finance API, *given company names and/or
-indices*.
-
-`stockr` functions are designed to return a standardized `data.frame`
-with standardized column names, values, and attributes. The package’s
-aim is to help you to quickly reach the point where you have financial
-data to analyze, but no assumptions are made about the analysis tools
-you’ll used (e.g., no dependencies on `zoo` or `xts` for time series
-analysis).
+> `stockr` functions return a standardized `data.frame` with consistent
+> column names, allowing you to focus directly on financial analysis.
 
 ## Installation
 
@@ -32,21 +25,48 @@ You can install the development version of stockr:
 devtools::install_github("clement-LVD/stockr")
 ```
 
-## Example
+## Examples
+
+**Fetch ticker symbol and actual values (scraping).** Given a keyword,
+search informations on <https://finance.yahoo.com/lookup/> with
+`stockr::fetch_indices`
 
 ``` r
 library(stockr)
-# get indices names on the swedish marketplace
-indices <- fetch_stock_indices(names = c("VOLVO", "SAAB") , marketplaces = "STO")
-# search for historical values
-datas <- fetch_historic(symbols = indices$symbol )
-#> ETA :  1  sec'
+# get all the values answered by https://finance.yahoo.com/lookup/
+indices <- fetch_indices(names = c("TOYOTA")  )
+str(indices) # all the last results over all marketplaces
+#> 'data.frame':    25 obs. of  7 variables:
+#>  $ symbol           : chr  "TM" "TOMA.MU" "7203.T" "TAH0.MU" ...
+#>  $ name             : chr  "Toyota Motor Corporation" "TOYOTA MOTOR CORP.            R" "TOYOTA MOTOR CORP" "Toyota Industries Corp.       R" ...
+#>  $ last price       : chr  "190.70" "178.00" "2,844.50" "86.00" ...
+#>  $ sector / category: chr  "Consumer Cyclical" "Consumer Cyclical" "Consumer Cyclical" "Industrials" ...
+#>  $ type             : chr  "Stocks" "Stocks" "Stocks" "Stocks" ...
+#>  $ exchange         : chr  "NYQ" "MUN" "JPX" "MUN" ...
+#>  $ searched         : chr  "TOYOTA" "TOYOTA" "TOYOTA" "TOYOTA" ...
+```
+
+Typically, you first retrieve the exact ticker symbol by analyzing the
+results of `stockr::fetch_indices`. Then, you can use this symbol to
+fetch the corresponding historical financial data (see below).
+
+**Fetch historical financial data (Yahoo API).**
+
+``` r
+# (Optionally filter a precise marketplace)
+indices <- fetch_indices(names = c("VOLVO", "SAAB"), marketplaces = "STO")
+# We keep only the swedish marketplace (STOckholm) informations
+
+# Fetch historical values, given ticker symbol(s)
+datas <- fetch_historic(symbols = indices$symbol)
+#> 
+#> => 4 request(s) to Yahoo Finance (ETA :  1  sec')VOLCAR-B.ST [OK]                                                                                                    VOLV-A.ST [OK]                                                                                                    VOLV-B.ST [OK]                                                                                                    SAAB-B.ST [OK]                                                                                                    
 
 str(datas)
 #> 'data.frame':    20070 obs. of  15 variables:
-#>  $ high            : num  67.4 68.4 60.8 58.9 59.9 ...
 #>  $ open            : num  58.8 65.6 60.6 58 59.5 ...
 #>  $ close           : num  65.2 60.6 58 58.9 59.1 ...
+#>  $ high            : num  67.4 68.4 60.8 58.9 59.9 ...
 #>  $ volume          : int  70977504 20388814 14497507 7963166 2874916 1228461 2989143 1889096 1866615 7365218 ...
 #>  $ low             : num  55 59 56.6 55.8 58 ...
 #>  $ adjclose        : num  65.2 60.6 58 58.9 59.1 ...
@@ -63,21 +83,20 @@ str(datas)
 
 ## Programming philosophy
 
-`stockr` offering a standardized `data.frame` and methods for retrieve
-financial data.
+The `stockr` functions (`fetch_historic` & `fetch_indices`) returns a
+standardized `data.frame` containing financial data from the Yahoo
+Finance API:
 
-- Company names can be provided to `stockr` instead of specific ticker
-  symbols, allowing the package to rely on a standardized logic when the
-  exact financial identifier of a company on a given stock exchange is
-  unknown.
+- The variable names in the returned `data.frame` are consistent and
+  inherited directly from the Yahoo Finance API, although they are
+  converted to lowercase.
 
-- The variable names in the returned `data.frame` are stable and
-  inherited from the Yahoo Finance API, though they are converted to
-  lowercase.
+- The returned data is always in the form of a simple `data.frame`
+  object, i.e. does not return time series objects.
 
-- The returned tables are always simple data.frame objects. Thus, it’s
-  up to you to construct data-analysis objects, e.g., time series
-  objects.
+- No specific data analysis package dependencies are imposed on the user
+  : no assumptions are made about the analysis tools you’ll used (e.g.,
+  no dependencies on `zoo` or `xts` for time series analysis).
 
-- Dependencies related to data analysis are not imposed to the user,
-  e.g., there is no requirement for packages like `zoo` or `xts`.
+It is up to the user to create more advanced data analysis objects from
+the returned data.

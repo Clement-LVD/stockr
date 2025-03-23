@@ -4,12 +4,7 @@
 \alias{fetch_historic}
 \title{Fetch historical financial data indices}
 \usage{
-fetch_historic(
-  symbols = c("SAAB-B.ST"),
-  wait.time = 0,
-  .verbose = T,
-  src = "yahoo"
-)
+fetch_historic(symbols = c("SAAB-B.ST"), wait.time = 0, .verbose = T)
 }
 \arguments{
 \item{symbols}{\code{character} A character string representing the indices to search for.}
@@ -17,8 +12,6 @@ fetch_historic(
 \item{wait.time}{\code{double} A character string representing the indices to search for.}
 
 \item{.verbose}{\code{logical}, default = \code{TRUE}. If \code{TRUE}, send messages to the console}
-
-\item{src}{\code{character}, default = \code{'yahoo'} The src parameters of  quantmod::getSymbols.}
 }
 \value{
 A data frame with columns:

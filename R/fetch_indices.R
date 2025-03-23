@@ -1,8 +1,8 @@
-#' Fetch stock indices based on a company name
+#' Fetch ticker stock indices based on a company name
 #'
 #' Given companies names, the function retrieves overall stock market data
 #' (by searching on https://finance.yahoo.com ).
-#' It returns a data frame with the stock symbol on various marketplaces
+#' It returns a data frame with the ticker symbol on various marketplaces
 #' , companies names, last price on the marketplace,
 #' sector/category (if available), type (always "stocks")
 #' , exchange marketplace name and initially searched companies names.
@@ -18,12 +18,12 @@
 #' 	- `Exchange`: The stock exchange place for this stock.
 #'  - `searched`: The original names searched
 #' @examples
-#' fetch_stock_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO"  )
+#' fetch_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO")
 #' @seealso \code{\link{get_yahoo_data}},  \code{\link{fetch_historic}}
 #' @importFrom XML readHTMLTable
 #' @importFrom utils URLencode
 #' @export
-fetch_stock_indices <- function(names, marketplaces = NULL) {
+fetch_indices <- function(names, marketplaces = NULL) {
 base_url = "https://finance.yahoo.com/lookup/equity/?s="
 
   name_encode <- utils::URLencode(names)
@@ -35,7 +35,7 @@ base_url = "https://finance.yahoo.com/lookup/equity/?s="
       # sinon c'est plus compliqué car il faut rbind tous les résultats ^^
       results <- do.call(rbind, lapply(names, function(name) {
         # Appeler la fonction pour chaque terme et renvoyer le résultat
-        fetch_stock_indices(name)
+        fetch_indices(name)
       }))
 
 if(!is.null(marketplaces) ) {results <- results[which(results$exchange %in% marketplaces), ]}

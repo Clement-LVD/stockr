@@ -34,7 +34,6 @@
 #'   \item{exchangename}{The name of the exchange marketplace where the financial instrument is listed.}
 #'   \item{fullexchangename}{The full name of the exchange marketplace.}
 #'   \item{timezone}{The timezone in which the data is reported.}
-#'
 #' @importFrom jsonlite fromJSON
 #' @importFrom utils URLencode
 #' @examples
@@ -69,6 +68,7 @@ warning(immediate. = T, "Only one symbol should be passed and you have indicated
     end_timestamp <- as.integer(Sys.time())  # today is the default
   }
 
+#### API request ####
   #  construct an api request
   url <- paste0("https://query1.finance.yahoo.com/v8/finance/chart/", symbol)
 
@@ -84,8 +84,7 @@ warning(immediate. = T, "Only one symbol should be passed and you have indicated
   full_url <- paste(url, "?", query_string, sep = "")
   full_url <- utils::URLencode(full_url)
 
-# here we use the behavior of the api : answer an error if the endpoint is not valid
-  # Using tryCatch to handle these errors
+  # answer readLines raw content
   connection <- tryCatch({
     # Attempt to open the connection
     url(full_url, open = "r")
@@ -97,25 +96,27 @@ warning(immediate. = T, "Only one symbol should be passed and you have indicated
     warning_message <- w$message
     if(grep(x = warning_message, "404 Not Found")){return(NA)}
     # a warning is most of the times an error answered by the api # cat("Warning: ", w$message, "\n")
-        return(NULL) # non existent value
+    return(NULL) # non existent value
   })
 
-if(is.na(connection)) {warning(immediate. = T,
-"The value is not associated with a valid currency name !\n=> "
-, symbol, " is not a valid currency name, according to the Yahoo Finance API.
-See : https://finance.yahoo.com/ or stockr::fetch_stock_indices")
-return(NA)
-}
+  if(is.na(connection)) {warning(immediate. = T,
+                                 "The value is not associated with a valid currency name !\n=> "
+                                 , symbol, " is not a valid name, according to the Yahoo Finance API.
+See : https://finance.yahoo.com/ for valid names")
+    return(NA)
+  }
 
-if(is.null(connection)) return(NULL) # It's certainly a default from the user (e.g., no internet or no proxy)
+  if(is.null(connection)) return(NULL) # It's certainly a default from the user (e.g., no internet or no proxy)
 
-response_text <- readLines(connection, warn = F)
+  response_text <- readLines(connection, warn = F)
 
-close(connection)
+  close(connection)
 
+# the API query1.finance.yahoo.com/V8 answer JSON
   # Convert JSON to a list
   data <- jsonlite::fromJSON(paste(response_text, collapse = ""))
 
+  #### data wrangling ####
   # deal with historical indicators list
 indicators <- data$chart$result$indicators
 quote_data <- indicators$quote[[1]]
@@ -127,19 +128,15 @@ df_historical_values <-  data.frame(lapply(quote_data, unlist))
 # add timestamp
 df_historical_values$timestamp <- data$chart$result$timestamp[[1]]
 df_historical_values$date <- as.POSIXct(df_historical_values$timestamp)
-colnames(df_historical_values) <- tolower(colnames(df_historical_values))
 
 # and the overall datas interesting for us :
 meta_datas <- data$chart$result$meta
 col_to_add <- meta_datas[, c("currency", "symbol","longName",  "shortName" , "exchangeName", "fullExchangeName","timezone")]
  # "regularMarketPrice" is redundant with the ADJUSTED (!) price at closing time or the opening
 
-colnames(col_to_add) <- tolower(colnames(col_to_add))
 df_historical_values <- data.frame( df_historical_values,  col_to_add, check.names = FALSE, row.names = NULL)
 # lot of redundancy but that's okaysh for the sake of limiting errors and misunderstood
-
-# attributes_to_add <- meta_data[, c("dataGranularity", "validRanges")]
-# meta_list <- as.list(meta_datas)
+colnames(df_historical_values) <- tolower(colnames(df_historical_values))
 
 return(unique(df_historical_values))
 }
