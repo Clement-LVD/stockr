@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Retrieve Data from Yahoo Finance API • stockr</title>
+<title>Fetch Financial Data • stockr</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Retrieve Data from Yahoo Finance API">
-<meta name="description" content="Retrieve financial data from the Yahoo Finance API, given company names or stock ticker symbols.">
-<meta property="og:description" content="Retrieve financial data from the Yahoo Finance API, given company names or stock ticker symbols.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Fetch Financial Data">
+<meta name="description" content="An R package to fetch financial data from Yahoo Finance, given company names or ticker symbols.">
+<meta property="og:description" content="An R package to fetch financial data from Yahoo Finance, given company names or ticker symbols.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">stockr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,11 +88,11 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">histo</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    12810 obs. of  14 variables:</span></span>
-<span><span class="co">#&gt;  $ low             : num  16.9 16.4 17.1 17.1 16.5 ...</span></span>
-<span><span class="co">#&gt;  $ open            : num  18.5 17.7 17.1 17.1 16.5 ...</span></span>
-<span><span class="co">#&gt;  $ high            : num  18.5 17.7 17.1 17.1 17 ...</span></span>
-<span><span class="co">#&gt;  $ volume          : int  313414 294565 0 0 313418 264509 165960 205163 151425 214397 ...</span></span>
 <span><span class="co">#&gt;  $ close           : num  17.4 17.1 17.1 17.1 16.9 ...</span></span>
+<span><span class="co">#&gt;  $ volume          : int  313414 294565 0 0 313418 264509 165960 205163 151425 214397 ...</span></span>
+<span><span class="co">#&gt;  $ low             : num  16.9 16.4 17.1 17.1 16.5 ...</span></span>
+<span><span class="co">#&gt;  $ high            : num  18.5 17.7 17.1 17.1 17 ...</span></span>
+<span><span class="co">#&gt;  $ open            : num  18.5 17.7 17.1 17.1 16.5 ...</span></span>
 <span><span class="co">#&gt;  $ adjclose        : num  9.86 9.66 9.66 9.66 9.53 ...</span></span>
 <span><span class="co">#&gt;  $ timestamp       : int  946886400 946972800 947059200 947145600 947232000 947491200 947577600 947664000 947750400 947836800 ...</span></span>
 <span><span class="co">#&gt;  $ date            : POSIXct, format: "2000-01-03 09:00:00" "2000-01-04 09:00:00" ...</span></span>
@@ -106,7 +106,7 @@
 <span><span class="co">#&gt;  - attr(*, "fetch.date")= Date[1:1], format: "2025-03-23"</span></span>
 <span><span class="co">#&gt;  - attr(*, "fetch.currencies")= chr "SEK"</span></span>
 <span><span class="co">#&gt;  - attr(*, "n.currencies")= int 1</span></span></code></pre></div>
-<p>This historical <code>data.frame</code> contain daily value.</p>
+<p>This <code>data.frame</code> contain daily value.</p>
 <p><strong>Chaining examples 1 &amp; 2.</strong> Fetch ticker symbols associated with a keyword such as companies names, and get historical financial data for these symbols.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1) fetch_indices (optionally filter a precise marketplace)</span></span>
@@ -121,11 +121,11 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">datas</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    31223 obs. of  14 variables:</span></span>
-<span><span class="co">#&gt;  $ low             : num  4.94 4.9 4.74 4.7 4.7 ...</span></span>
-<span><span class="co">#&gt;  $ volume          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">#&gt;  $ open            : num  4.94 4.9 4.74 4.7 4.7 ...</span></span>
-<span><span class="co">#&gt;  $ high            : num  4.94 4.9 4.74 4.7 4.76 ...</span></span>
 <span><span class="co">#&gt;  $ close           : num  4.94 4.9 4.74 4.7 4.76 ...</span></span>
+<span><span class="co">#&gt;  $ high            : num  4.94 4.9 4.74 4.7 4.76 ...</span></span>
+<span><span class="co">#&gt;  $ volume          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ low             : num  4.94 4.9 4.74 4.7 4.7 ...</span></span>
 <span><span class="co">#&gt;  $ adjclose        : num  0.000575 0.000571 0.000552 0.000547 0.000554 ...</span></span>
 <span><span class="co">#&gt;  $ timestamp       : int  946882800 946969200 947055600 947142000 947228400 947487600 947574000 947660400 947746800 947833200 ...</span></span>
 <span><span class="co">#&gt;  $ date            : POSIXct, format: "2000-01-03 08:00:00" "2000-01-04 08:00:00" ...</span></span>

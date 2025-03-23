@@ -11,7 +11,7 @@ The data includes open stock price, high, low, close, volume, and adjusted close
 
     <a class="navbar-brand me-2" href="../index.html">stockr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,15 +134,16 @@ it retrieves all available data from the beginning of time (default for start) t
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">get_yahoo_data</span><span class="op">(</span>symbol <span class="op">=</span> <span class="st">"SAAB-B.ST"</span>, start_date <span class="op">=</span> <span class="st">"2020-01-01"</span>, interval <span class="op">=</span> <span class="st">"5d"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="co">#'</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    close   high    low  volume   open adjclose  timestamp                date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 85.050 85.050 83.825 1671108 84.575 80.94995 1579161600 2020-01-16 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 85.300 86.000 84.750  888888 86.000 81.18790 1579593600 2020-01-21 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 78.300 79.350 77.925 1271576 78.825 74.52535 1580457600 2020-01-31 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 83.300 83.400 81.300 1503696 81.750 79.28431 1580889600 2020-02-05 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 77.500 80.025 77.200 2685416 79.800 73.76392 1581321600 2020-02-10 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 73.925 75.000 73.900 1220424 74.500 70.36126 1582185600 2020-02-20 08:00:00</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">get_yahoo_data</span><span class="op">(</span>symbol <span class="op">=</span> <span class="st">"SAAB-B.ST"</span>, start_date <span class="op">=</span> <span class="st">"2020-01-01"</span>, interval <span class="op">=</span> <span class="st">"5d"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    close    low   open  volume   high adjclose  timestamp                date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 85.050 83.825 84.575 1671108 85.050 80.94994 1579161600 2020-01-16 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 85.300 84.750 86.000  888888 86.000 81.18790 1579593600 2020-01-21 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 78.300 77.925 78.825 1271576 79.350 74.52535 1580457600 2020-01-31 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 83.300 81.300 81.750 1503696 83.400 79.28431 1580889600 2020-02-05 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 77.500 77.200 79.800 2685416 80.025 73.76392 1581321600 2020-02-10 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 73.925 73.900 74.500 1220424 75.000 70.36127 1582185600 2020-02-20 08:00:00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   currency    symbol      shortname exchangename fullexchangename timezone</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      SEK SAAB-B.ST SAAB AB ser. B          STO        Stockholm      CET</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      SEK SAAB-B.ST SAAB AB ser. B          STO        Stockholm      CET</span>
@@ -150,12 +151,7 @@ it retrieves all available data from the beginning of time (default for start) t
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4      SEK SAAB-B.ST SAAB AB ser. B          STO        Stockholm      CET</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5      SEK SAAB-B.ST SAAB AB ser. B          STO        Stockholm      CET</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6      SEK SAAB-B.ST SAAB AB ser. B          STO        Stockholm      CET</span>
-<span class="r-in"><span>  <span class="va">invalid_datas</span> <span class="op">&lt;-</span> <span class="fu">get_yahoo_data</span><span class="op">(</span>symbol <span class="op">=</span><span class="st">"SAAB"</span> <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> The value is not associated with a valid currency name !</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> =&gt;  SAAB  is not a valid name, according to the Yahoo Finance API.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> See : https://finance.yahoo.com/ for valid names</span>
-<span class="r-in"><span>  <span class="va">invalid_datas</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
+<span class="r-in"><span>  <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

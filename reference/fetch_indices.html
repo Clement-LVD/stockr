@@ -17,7 +17,7 @@ sector/category (if available), type (always "stocks")
 
     <a class="navbar-brand me-2" href="../index.html">stockr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,17 +85,19 @@ sector/category (if available), type (always "stocks")
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">fetch_indices</span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLVO"</span>, <span class="st">"SAAB"</span><span class="op">)</span>,  marketplaces <span class="op">=</span> <span class="st">"STO"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu">fetch_indices</span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLVO"</span>, <span class="st">"SAAB"</span><span class="op">)</span>,  marketplaces <span class="op">=</span> <span class="st">"STO"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         symbol                name last_price   sector_category   type exchange</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  VOLCAR-B.ST Volvo Car AB ser. B      21.89 Consumer Cyclical Stocks      STO</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4    VOLV-A.ST    Volvo, AB ser. A     308.80       Industrials Stocks      STO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14   VOLV-B.ST    Volvo, AB ser. B     308.90       Industrials Stocks      STO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   VOLV-B.ST    Volvo, AB ser. B     308.90       Industrials Stocks      STO</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 26   SAAB-B.ST      SAAB AB ser. B     380.05       Industrials Stocks      STO</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    searched</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     VOLVO</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4     VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14    VOLVO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    VOLVO</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 26     SAAB</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
