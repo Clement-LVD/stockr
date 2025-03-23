@@ -18,7 +18,12 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-`stockr` is a R package that provide stock datas from Yahoo Finance, given companies names and/or indices names.
+`stockr` is an R package that offers an efficient standardized approach to retrieve financial data.
+
+Data are fetched from the Yahoo Finance API, *given company names and/or indices*. 
+
+`stockr` functions are designed to return a standardized `data.frame` with standardized column names, values, and attributes. The package's aim is to help you to quickly reach the point where you have financial data to analyze, but no assumptions are made about the analysis tools you'll used (e.g., no dependencies on `zoo` or `xts` for time series analysis).
+
 
 ## Installation
 
@@ -41,3 +46,13 @@ str(datas)
 ```
 
 
+## Programming philosophy
+`stockr` offering a standardized `data.frame` and methods for retrieve financial data. 
+
+- Company names can be provided to `stockr` instead of specific ticker symbols, allowing the package to rely on a standardized logic when the exact financial identifier of a company on a given stock exchange is unknown.
+
+- The variable names in the returned `data.frame` are stable and inherited from the Yahoo Finance API, though they are converted to lowercase.
+
+- The returned tables are always simple data.frame objects (it's up to you to construct time series objects with, for example, `xts`).
+
+- Dependencies related to data analysis and visualization are not imposed to the user, e.g., there is no requirement for packages like `zoo` or `xts`.

@@ -30,7 +30,13 @@ sector/category (if available), type (always "stocks")
       <ul class="nav navbar-nav"><li>
   <a href="../reference/index.html">Reference</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/clement-LVD/stockr/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -40,7 +46,7 @@ sector/category (if available), type (always "stocks")
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Fetch stock indices based on a company name</h1>
-
+    <small class="dont-index">Source: <a href="https://github.com/clement-LVD/stockr/blob/HEAD/R/fetch_stock_indices.R" class="external-link"><code>R/fetch_stock_indices.R</code></a></small>
     <div class="hidden name"><code>fetch_stock_indices.Rd</code></div>
     </div>
 
@@ -82,89 +88,17 @@ sector/category (if available), type (always "stocks")
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">fetch_stock_indices</span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLVO"</span>, <span class="st">"SAAB"</span><span class="op">)</span> <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         symbol                            name last price sector / category</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  VOLCAR-B.ST             Volvo Car AB ser. B      21.89 Consumer Cyclical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      VOL1.SG                           Volvo      28.06       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      VOL1.MU Volvo (publ), AB              N      28.41       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      VOL3.BE Volvo (publ), AB              N      28.26       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    VOLVBS.XD                        Volvo AB     308.55                --</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    VOLCBS.XC                    Volvo Car AB      21.83 Consumer Cyclical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      VOL1.DU Volvo (publ), AB              N      28.02       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    VOLVBS.XC                        Volvo AB     309.60                --</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      0HTP.IL  VOLVO AB VOLVO CLASS B ORD SHS     309.25       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   VOLV-B.ST                Volvo, AB ser. B     308.90       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   VOLV-A.ST                Volvo, AB ser. A     308.80       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     VOL3.HA Volvo (publ), AB              N      28.26       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     VOL1.BE Volvo (publ), AB              N      28.20       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     VOL3.MU Volvo (publ), AB              N      28.24       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15    VOLVB.PR                        VOLVO AB     760.00       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16       VLVLY                        Volvo AB      30.39       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17       VOLVF                        Volvo AB      31.74       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18   VOLCBS.XD                    Volvo Car AB      21.91                --</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19   VOLVAS.XD                        Volvo AB     308.80                --</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     0MHW.IL  VOLVO AB VOLVO CLASS A ORD SHS     309.30       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21     0AAK.IL  VOLVO CAR AB VOLVO CAR ORD SHS      21.83 Consumer Cyclical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22      VOL3.F Volvo (publ), AB              N      28.26       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23      VOL4.F Volvo (publ), AB              N      28.00       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24     VOL3.SG                   AB Volvo publ      28.08       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25     VOL3.HM Volvo (publ), AB              N      28.26       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26   SAAB-B.ST                  SAAB AB ser. B     380.05       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27       SAABY                         Saab AB      18.80       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28      SDV1.F Saab AB                       N      34.94       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29     0GWL.IL          SAAB AB SAAB B ORD SHS     379.45       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30   SAABBS.XC                         Saab AB     361.95       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31       SAABF                         Saab AB      37.65       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32   SAABBS.XD                         Saab AB     381.30                --</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33     SDV0.MU Saab AB                       N      18.00       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34     SDV1.SG                         Saab AB      34.78       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35     SDV0.BE Saab AB                       N      16.70       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36      SDV0.F Saab AB                       N      16.60       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37     SDV1.DU Saab AB                       N      34.68       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38     SDV0.SG                  Saab AB (ADRs)      16.50       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39     SDV1.BE Saab AB                       N      34.76       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40     SDV1.MU Saab AB                       N      34.67       Industrials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      type exchange searched</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Stocks      STO    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Stocks      STU    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Stocks      MUN    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Stocks      BER    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Stocks      DXE    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Stocks      CXE    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  Stocks      DUS    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  Stocks      CXE    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Stocks      IOB    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Stocks      STO    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 Stocks      STO    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 Stocks      HAN    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 Stocks      BER    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 Stocks      MUN    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 Stocks      PRA    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 Stocks      PNK    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 Stocks      PNK    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 Stocks      DXE    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 Stocks      DXE    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 Stocks      IOB    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 Stocks      IOB    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 Stocks      FRA    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 Stocks      FRA    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 Stocks      STU    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 Stocks      HAM    VOLVO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 Stocks      STO     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 Stocks      PNK     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 Stocks      FRA     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 Stocks      IOB     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 Stocks      CXE     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 Stocks      PNK     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 Stocks      DXE     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 Stocks      MUN     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34 Stocks      STU     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35 Stocks      BER     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36 Stocks      FRA     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37 Stocks      DUS     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38 Stocks      STU     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39 Stocks      BER     SAAB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40 Stocks      MUN     SAAB</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">fetch_stock_indices</span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLVO"</span>, <span class="st">"SAAB"</span><span class="op">)</span>,  marketplaces <span class="op">=</span> <span class="st">"STO"</span>  <span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         symbol                name last price sector / category   type exchange</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  VOLCAR-B.ST Volvo Car AB ser. B      21.89 Consumer Cyclical Stocks      STO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    VOLV-A.ST    Volvo, AB ser. A     308.80       Industrials Stocks      STO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    VOLV-B.ST    Volvo, AB ser. B     308.90       Industrials Stocks      STO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26   SAAB-B.ST      SAAB AB ser. B     380.05       Industrials Stocks      STO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    searched</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     VOLVO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     VOLVO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     VOLVO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26     SAAB</span>
 </code></pre></div>
     </div>
   </div>

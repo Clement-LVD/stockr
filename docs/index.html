@@ -43,7 +43,14 @@
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/clement-LVD/stockr/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -60,11 +67,13 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p><code>stockr</code> is a R package that provide stock datas, given companies names.</p>
+<p><code>stockr</code> is an R package that offers an efficient standardized approach to retrieve financial data.</p>
+<p>Data are fetched from the Yahoo Finance API, <em>given company names and/or indices</em>.</p>
+<p><code>stockr</code> functions are designed to return a standardized <code>data.frame</code> with standardized column names, values, and attributes. The package’s aim is to help you to quickly reach the point where you have financial data to analyze, but no assumptions are made about the analysis tools you’ll used (e.g., no dependencies on <code>zoo</code> or <code>xts</code> for time series analysis).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of stockr like so:</p>
+<p>You can install the development version of stockr:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"clement-LVD/stockr"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -73,27 +82,54 @@
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">stockr</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Registered S3 method overwritten by 'quantmod':</span></span>
-<span><span class="co">#&gt;   method            from</span></span>
-<span><span class="co">#&gt;   as.zoo.data.frame zoo</span></span>
 <span><span class="co"># get indices names on the swedish marketplace</span></span>
 <span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_stock_indices.html">fetch_stock_indices</a></span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLVO"</span>, <span class="st">"SAAB"</span><span class="op">)</span> , marketplaces <span class="op">=</span> <span class="st">"STO"</span><span class="op">)</span></span>
 <span><span class="co"># search for historical values</span></span>
 <span><span class="va">datas</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_historic.html">fetch_historic</a></span><span class="op">(</span>symbols <span class="op">=</span> <span class="va">indices</span><span class="op">$</span><span class="va">symbol</span> <span class="op">)</span></span>
 <span><span class="co">#&gt; ETA :  1  sec'</span></span>
-<span><span class="co">#&gt; downloading  VOLCAR-B.ST .....</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; downloading  VOLV-A.ST .....</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; downloading  VOLV-B.ST .....</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; downloading  SAAB-B.ST .....</span></span></code></pre></div>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">datas</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    20070 obs. of  15 variables:</span></span>
+<span><span class="co">#&gt;  $ low             : num  55 59 56.6 55.8 58 ...</span></span>
+<span><span class="co">#&gt;  $ volume          : int  70977504 20388814 14497507 7963166 2874916 1228461 2989143 1889096 1866615 7365218 ...</span></span>
+<span><span class="co">#&gt;  $ open            : num  58.8 65.6 60.6 58 59.5 ...</span></span>
+<span><span class="co">#&gt;  $ high            : num  67.4 68.4 60.8 58.9 59.9 ...</span></span>
+<span><span class="co">#&gt;  $ close           : num  65.2 60.6 58 58.9 59.1 ...</span></span>
+<span><span class="co">#&gt;  $ adjclose        : num  65.2 60.6 58 58.9 59.1 ...</span></span>
+<span><span class="co">#&gt;  $ timestamp       : int  1635490800 1635753600 1635840000 1635926400 1636012800 1636099200 1636358400 1636444800 1636531200 1636617600 ...</span></span>
+<span><span class="co">#&gt;  $ date            : POSIXct, format: "2021-10-29 09:00:00" "2021-11-01 09:00:00" ...</span></span>
+<span><span class="co">#&gt;  $ currency        : chr  "SEK" "SEK" "SEK" "SEK" ...</span></span>
+<span><span class="co">#&gt;  $ symbol          : chr  "VOLCAR-B.ST" "VOLCAR-B.ST" "VOLCAR-B.ST" "VOLCAR-B.ST" ...</span></span>
+<span><span class="co">#&gt;  $ longname        : chr  "Volvo Car AB (publ.)" "Volvo Car AB (publ.)" "Volvo Car AB (publ.)" "Volvo Car AB (publ.)" ...</span></span>
+<span><span class="co">#&gt;  $ shortname       : chr  "Volvo Car AB ser. B" "Volvo Car AB ser. B" "Volvo Car AB ser. B" "Volvo Car AB ser. B" ...</span></span>
+<span><span class="co">#&gt;  $ exchangename    : chr  "STO" "STO" "STO" "STO" ...</span></span>
+<span><span class="co">#&gt;  $ fullexchangename: chr  "Stockholm" "Stockholm" "Stockholm" "Stockholm" ...</span></span>
+<span><span class="co">#&gt;  $ timezone        : chr  "CET" "CET" "CET" "CET" ...</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="programming-philosophy">Programming philosophy<a class="anchor" aria-label="anchor" href="#programming-philosophy"></a>
+</h2>
+<p><code>stockr</code> offering a standardized <code>data.frame</code> and methods for retrieve financial data.</p>
+<ul>
+<li><p>Company names can be provided to <code>stockr</code> instead of specific ticker symbols, allowing the package to rely on a standardized logic when the exact financial identifier of a company on a given stock exchange is unknown.</p></li>
+<li><p>The variable names in the returned <code>data.frame</code> are stable and inherited from the Yahoo Finance API, though they are converted to lowercase.</p></li>
+<li><p>The returned tables are always simple data.frame objects (it’s up to you to construct time series objects with, for example, <code>xts</code>).</p></li>
+<li><p>Dependencies related to data analysis and visualization are not imposed to the user, e.g., there is no requirement for packages like <code>zoo</code> or <code>xts</code>.</p></li>
+</ul>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/clement-LVD/stockr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/clement-LVD/stockr/issues" class="external-link">Report a bug</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>

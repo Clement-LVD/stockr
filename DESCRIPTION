@@ -13,3 +13,5 @@ Imports:
     XML,
     jsonlite,
     utils
+URL: https://github.com/clement-LVD/stockr
+BugReports: https://github.com/clement-LVD/stockr/issues
