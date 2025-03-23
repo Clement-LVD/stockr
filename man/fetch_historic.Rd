@@ -15,15 +15,20 @@ fetch_historic(symbols = c("SAAB-B.ST"), wait.time = 0, .verbose = T)
 }
 \value{
 A data frame with columns:
-- \code{open}: The value at the opening of the marketplace
-- \code{high}: Highest value of the indice during this day.
 - \code{low}: Lowest value of the indice during this day.
+- \code{high}: Highest value of the indice during this day.
 - \code{close}: Value at the closing of the maketplace.
+- \code{open}: The value at the opening of the marketplace
 - \code{volume}: The volume of operation.
-- \code{adjusted}: The adjusted closing value.
+- \code{adjclose}: The adjusted closing value.
 \itemize{
-\item \code{symbol}: The original indices names searched
+\item \code{timestamp}: The date for these values
 \item \code{date}: The date for these values
+\item \code{symbol}: The original indices names searched
+\item \code{shortname}: The name of the value
+\item \code{exchangename}: The financial place abbreviation
+\item \code{fullexchangename}: The full name of the financial place
+\item \code{timezone}: The timezone, e.g., 'CET' for Central European Time
 }
 }
 \description{

@@ -13,12 +13,12 @@ fetch_indices(names, marketplaces = NULL)
 }
 \value{
 A data frame with columns:
-- \code{Symbol}: The stock ticker symbol from yahoo
-- \code{Name}: The full company name.
-- \verb{Last Price}: The latest available price.
-- \code{Sector / Category}: The sector or industry category (if available).
-- \code{Type}: The type of asset (always "stocks").
-- \code{Exchange}: The stock exchange place for this stock.
+- \code{symbol}: The stock ticker symbol from yahoo
+- \code{name}: The full company name.
+- \code{last_price}: The latest available price.
+- \code{sector_category}: The sector or industry category (if available).
+- \code{type}: The type of asset (always "stocks").
+- \code{exchange}: The stock exchange place for this stock.
 \itemize{
 \item \code{searched}: The original names searched
 }

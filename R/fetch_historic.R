@@ -1,20 +1,25 @@
 #' Fetch historical financial data indices
 #'
-#' Given indices names, the function retrieves historical stock market data
-#' (from finance.yahoo.com by default). Answer a `data.frame` with standardized colnames.
+#' Given indices names (i.e. ticker symbol), the function retrieves historical stock market data
+#' from finance.yahoo.com. Answer a `data.frame` with standardized colnames.
 #'
 #' @param symbols `character` A character string representing the indices to search for.
 #' @param wait.time `double` A character string representing the indices to search for.
 #' @param .verbose `logical`, default = `TRUE`. If `TRUE`, send messages to the console
 #' @return A data frame with columns:
-#' 	- `open`: The value at the opening of the marketplace
-#' 	- `high`: Highest value of the indice during this day.
 #' 	- `low`: Lowest value of the indice during this day.
+#' 	- `high`: Highest value of the indice during this day.
 #' 	- `close`: Value at the closing of the maketplace.
+#' 	- `open`: The value at the opening of the marketplace
 #' 	- `volume`: The volume of operation.
-#' 	- `adjusted`: The adjusted closing value.
-#'  - `symbol`: The original indices names searched
+#' 	- `adjclose`: The adjusted closing value.
+#'  - `timestamp`: The date for these values
 #'  - `date`: The date for these values
+#'  - `symbol`: The original indices names searched
+#'  - `shortname`: The name of the value
+#'  - `exchangename`: The financial place abbreviation
+#'  - `fullexchangename`: The full name of the financial place
+#'  - `timezone`: The timezone, e.g., 'CET' for Central European Time
 #' @examples
 #' datas <- fetch_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )
 #' @seealso \code{\link{get_yahoo_data}}

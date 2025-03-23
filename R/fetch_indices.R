@@ -10,12 +10,12 @@
 #' @param names A character string representing the company name to search for.
 #' @param marketplaces (optionnal) A character string representing the marketplace(s) to consider. Default keep all the marketplace
 #' @return A data frame with columns:
-#' 	- `Symbol`: The stock ticker symbol from yahoo
-#' 	- `Name`: The full company name.
-#' 	- `Last Price`: The latest available price.
-#' 	- `Sector / Category`: The sector or industry category (if available).
-#' 	- `Type`: The type of asset (always "stocks").
-#' 	- `Exchange`: The stock exchange place for this stock.
+#' 	- `symbol`: The stock ticker symbol from yahoo
+#' 	- `name`: The full company name.
+#' 	- `last_price`: The latest available price.
+#' 	- `sector_category`: The sector or industry category (if available).
+#' 	- `type`: The type of asset (always "stocks").
+#' 	- `exchange`: The stock exchange place for this stock.
 #'  - `searched`: The original names searched
 #' @examples
 #' fetch_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO")
@@ -64,7 +64,7 @@ if (!is.null(tables) && length(tables) > 0) {
 }
 
 colnames(table) <- trimws(tolower(colnames(table)))
-
+colnames(table) <- gsub(x = colnames(table), " / | ", "_")
 return(unique(table))
 }
 
