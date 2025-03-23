@@ -50,7 +50,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><code>stockr</code> is an R package that retrieve financial data from the Yahoo Finance API, given company names or stock ‘ticker’ symbols.</p>
+<p><code>stockr</code> is an R package that retrieve financial data from the Yahoo Finance API, given company names or stock ticker symbols<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Ticker_symbol" class="external-link uri"&gt;https://en.wikipedia.org/wiki/Ticker_symbol&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a>.</p>
 <blockquote>
 <p><code>stockr</code> functions return a standardized <code>data.frame</code> with consistent column names, allowing you to focus directly on financial analysis.</p>
 </blockquote>
@@ -64,7 +64,7 @@
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p><strong>Fetch ticker symbol and actual values (scraping).</strong> Given a keyword, search informations on <a href="https://finance.yahoo.com/lookup/" class="external-link uri">https://finance.yahoo.com/lookup/</a> with <code><a href="reference/fetch_indices.html">stockr::fetch_indices</a></code></p>
+<p><strong>Fetch ticker symbol and actual values (scraping).</strong> Given a keyword such a company name, search informations on <a href="https://finance.yahoo.com/lookup/" class="external-link uri">https://finance.yahoo.com/lookup/</a> with <code><a href="reference/fetch_indices.html">stockr::fetch_indices</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/clement-LVD/stockr" class="external-link">stockr</a></span><span class="op">)</span></span>
 <span></span>
@@ -72,14 +72,14 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">toyota_indices</span><span class="op">)</span> <span class="co"># Results of the day, over all marketplaces</span></span>
 <span><span class="co">#&gt; 'data.frame':    25 obs. of  7 variables:</span></span>
-<span><span class="co">#&gt;  $ symbol           : chr  "TM" "TOMA.MU" "7203.T" "TAH0.MU" ...</span></span>
-<span><span class="co">#&gt;  $ name             : chr  "Toyota Motor Corporation" "TOYOTA MOTOR CORP.            R" "TOYOTA MOTOR CORP" "Toyota Industries Corp.       R" ...</span></span>
-<span><span class="co">#&gt;  $ last price       : chr  "190.70" "178.00" "2,844.50" "86.00" ...</span></span>
-<span><span class="co">#&gt;  $ sector / category: chr  "Consumer Cyclical" "Consumer Cyclical" "Consumer Cyclical" "Industrials" ...</span></span>
+<span><span class="co">#&gt;  $ symbol           : chr  "TM" "TOMA.MU" "TAH0.MU" "7203.T" ...</span></span>
+<span><span class="co">#&gt;  $ name             : chr  "Toyota Motor Corporation" "TOYOTA MOTOR CORP.            R" "Toyota Industries Corp.       R" "TOYOTA MOTOR CORP" ...</span></span>
+<span><span class="co">#&gt;  $ last price       : chr  "190.70" "178.00" "86.00" "2,844.50" ...</span></span>
+<span><span class="co">#&gt;  $ sector / category: chr  "Consumer Cyclical" "Consumer Cyclical" "Industrials" "Consumer Cyclical" ...</span></span>
 <span><span class="co">#&gt;  $ type             : chr  "Stocks" "Stocks" "Stocks" "Stocks" ...</span></span>
-<span><span class="co">#&gt;  $ exchange         : chr  "NYQ" "MUN" "JPX" "MUN" ...</span></span>
+<span><span class="co">#&gt;  $ exchange         : chr  "NYQ" "MUN" "MUN" "JPX" ...</span></span>
 <span><span class="co">#&gt;  $ searched         : chr  "TOYOTA" "TOYOTA" "TOYOTA" "TOYOTA" ...</span></span></code></pre></div>
-<p>Typically, you start by retrieving the exact ticker symbol using <code><a href="reference/fetch_indices.html">stockr::fetch_indices</a></code>. For example, Toyota’s stock on the ‘NYQ’ is identified by the ticker symbol ‘TM’. You can then use these symbols to fetch the corresponding historical financial data (see below).</p>
+<p>Typically, you start by retrieving an exact ticker symbol using <code><a href="reference/fetch_indices.html">stockr::fetch_indices</a></code>. For example, Toyota’s stock on the ‘NYQ’ is identified by the ticker symbol ‘TM’. You can then use these ticker symbols to fetch the corresponding historical financial data (see below).</p>
 <p><strong>Fetch historical financial data (Yahoo API).</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -89,11 +89,11 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">saab_histo</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    6405 obs. of  15 variables:</span></span>
-<span><span class="co">#&gt;  $ volume          : int  313414 294565 0 0 313418 264509 165960 205163 151425 214397 ...</span></span>
-<span><span class="co">#&gt;  $ high            : num  18.5 17.7 17.1 17.1 17 ...</span></span>
-<span><span class="co">#&gt;  $ open            : num  18.5 17.7 17.1 17.1 16.5 ...</span></span>
 <span><span class="co">#&gt;  $ low             : num  16.9 16.4 17.1 17.1 16.5 ...</span></span>
+<span><span class="co">#&gt;  $ high            : num  18.5 17.7 17.1 17.1 17 ...</span></span>
 <span><span class="co">#&gt;  $ close           : num  17.4 17.1 17.1 17.1 16.9 ...</span></span>
+<span><span class="co">#&gt;  $ open            : num  18.5 17.7 17.1 17.1 16.5 ...</span></span>
+<span><span class="co">#&gt;  $ volume          : int  313414 294565 0 0 313418 264509 165960 205163 151425 214397 ...</span></span>
 <span><span class="co">#&gt;  $ adjclose        : num  9.86 9.66 9.66 9.66 9.53 ...</span></span>
 <span><span class="co">#&gt;  $ timestamp       : int  946886400 946972800 947059200 947145600 947232000 947491200 947577600 947664000 947750400 947836800 ...</span></span>
 <span><span class="co">#&gt;  $ date            : POSIXct, format: "2000-01-03 09:00:00" "2000-01-04 09:00:00" ...</span></span>
@@ -104,7 +104,7 @@
 <span><span class="co">#&gt;  $ exchangename    : chr  "STO" "STO" "STO" "STO" ...</span></span>
 <span><span class="co">#&gt;  $ fullexchangename: chr  "Stockholm" "Stockholm" "Stockholm" "Stockholm" ...</span></span>
 <span><span class="co">#&gt;  $ timezone        : chr  "CET" "CET" "CET" "CET" ...</span></span></code></pre></div>
-<p><strong>Chaining examples 1 &amp; 2.</strong></p>
+<p><strong>Chaining examples 1 &amp; 2.</strong> Fetch ticker symbols associated with a keyword such as companes names, and get historical financial data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1) fetch_indices (optionally filter a precise marketplace)</span></span>
 <span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_indices.html">fetch_indices</a></span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLVO"</span>, <span class="st">"SAAB"</span>, <span class="st">"TOYOTA"</span><span class="op">)</span></span>
@@ -114,14 +114,14 @@
 <span><span class="co"># 2) Fetch historical values, given ticker symbol(s)</span></span>
 <span><span class="va">datas</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_historic.html">fetch_historic</a></span><span class="op">(</span>symbols <span class="op">=</span> <span class="va">indices</span><span class="op">$</span><span class="va">symbol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; =&gt; 6 request(s) to Yahoo Finance (ETA :  1.5  sec')VOL3.BE [OK]                                                                                                    VOL1.BE [OK]                                                                                                    SDV0.BE [OK]                                                                                                    SDV1.BE [OK]                                                                                                    TAH.BE [OK]                                                                                                    TOMA.BE [OK]                                                                                                    </span></span>
+<span><span class="co">#&gt; =&gt; 6 request(s) to Yahoo Finance (ETA :  1.5  sec')VOL3.BE [OK]                                                                                                    VOL1.BE [OK]                                                                                                    SDV0.BE [OK]                                                                                                    SDV1.BE [OK]                                                                                                    TAH.BE [OK]                                                                                                    TOM.BE [OK]                                                                                                    </span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">datas</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    30951 obs. of  15 variables:</span></span>
-<span><span class="co">#&gt;  $ high            : num  4.94 4.9 4.74 4.7 4.76 ...</span></span>
+<span><span class="co">#&gt; 'data.frame':    31223 obs. of  15 variables:</span></span>
 <span><span class="co">#&gt;  $ volume          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">#&gt;  $ low             : num  4.94 4.9 4.74 4.7 4.7 ...</span></span>
+<span><span class="co">#&gt;  $ high            : num  4.94 4.9 4.74 4.7 4.76 ...</span></span>
 <span><span class="co">#&gt;  $ open            : num  4.94 4.9 4.74 4.7 4.7 ...</span></span>
+<span><span class="co">#&gt;  $ low             : num  4.94 4.9 4.74 4.7 4.7 ...</span></span>
 <span><span class="co">#&gt;  $ close           : num  4.94 4.9 4.74 4.7 4.76 ...</span></span>
 <span><span class="co">#&gt;  $ adjclose        : num  0.00049 0.000486 0.00047 0.000466 0.000472 ...</span></span>
 <span><span class="co">#&gt;  $ timestamp       : int  946882800 946969200 947055600 947142000 947228400 947487600 947574000 947660400 947746800 947833200 ...</span></span>
@@ -139,8 +139,8 @@
 </h2>
 <p>The <code>stockr</code> functions (<code>fetch_historic</code> &amp; <code>fetch_indices</code>) returns a standardized <code>data.frame</code> containing financial data from the Yahoo Finance API:</p>
 <ul>
-<li><p>The variable names in the returned <code>data.frame</code> are consistent and inherited directly from the Yahoo Finance API, although they are converted to lowercase.</p></li>
 <li><p>The returned data is always in the form of a simple <code>data.frame</code> object.</p></li>
+<li><p>The variable names in the returned <code>data.frame</code> are consistent and inherited directly from the Yahoo Finance API, although they are converted to lowercase.</p></li>
 <li><dl>
 <dt>No specific data analysis package dependencies are imposed on the user</dt>
 <dd>
@@ -148,9 +148,10 @@ no assumptions are made about the analysis tools you’ll used (e.g., no depende
 </dd>
 </dl></li>
 </ul>
-<p>It is up to the user to create more advanced data analysis objects from the returned data.</p>
 </div>
 </div>
+
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
