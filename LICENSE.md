@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2025 Clément Laverdet [ORCID = "0000-0003-4466-3394"]
+Copyright (c) 2025 stockr authors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

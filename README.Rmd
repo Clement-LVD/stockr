@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 # stockr
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/stockr)](https://CRAN.R-project.org/package=stockr)
 <!-- badges: end -->
 
 `stockr` is an R package that offers an efficient standardized approach to retrieve financial data.
@@ -53,6 +55,6 @@ str(datas)
 
 - The variable names in the returned `data.frame` are stable and inherited from the Yahoo Finance API, though they are converted to lowercase.
 
-- The returned tables are always simple data.frame objects (it's up to you to construct time series objects with, for example, `xts`).
+- The returned tables are always simple data.frame objects. Thus, it's up to you to construct data-analysis objects, e.g., time series objects.
 
-- Dependencies related to data analysis and visualization are not imposed to the user, e.g., there is no requirement for packages like `zoo` or `xts`.
+- Dependencies related to data analysis are not imposed to the user, e.g., there is no requirement for packages like `zoo` or `xts`.

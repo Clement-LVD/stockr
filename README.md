@@ -4,6 +4,11 @@
 # stockr
 
 <!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/stockr)](https://CRAN.R-project.org/package=stockr)
 <!-- badges: end -->
 
 `stockr` is an R package that offers an efficient standardized approach
@@ -39,11 +44,11 @@ datas <- fetch_historic(symbols = indices$symbol )
 
 str(datas)
 #> 'data.frame':    20070 obs. of  15 variables:
-#>  $ low             : num  55 59 56.6 55.8 58 ...
-#>  $ volume          : int  70977504 20388814 14497507 7963166 2874916 1228461 2989143 1889096 1866615 7365218 ...
-#>  $ open            : num  58.8 65.6 60.6 58 59.5 ...
 #>  $ high            : num  67.4 68.4 60.8 58.9 59.9 ...
+#>  $ open            : num  58.8 65.6 60.6 58 59.5 ...
 #>  $ close           : num  65.2 60.6 58 58.9 59.1 ...
+#>  $ volume          : int  70977504 20388814 14497507 7963166 2874916 1228461 2989143 1889096 1866615 7365218 ...
+#>  $ low             : num  55 59 56.6 55.8 58 ...
 #>  $ adjclose        : num  65.2 60.6 58 58.9 59.1 ...
 #>  $ timestamp       : int  1635490800 1635753600 1635840000 1635926400 1636012800 1636099200 1636358400 1636444800 1636531200 1636617600 ...
 #>  $ date            : POSIXct, format: "2021-10-29 09:00:00" "2021-11-01 09:00:00" ...
@@ -70,9 +75,9 @@ financial data.
   inherited from the Yahoo Finance API, though they are converted to
   lowercase.
 
-- The returned tables are always simple data.frame objects (it’s up to
-  you to construct time series objects with, for example, `xts`).
+- The returned tables are always simple data.frame objects. Thus, it’s
+  up to you to construct data-analysis objects, e.g., time series
+  objects.
 
-- Dependencies related to data analysis and visualization are not
-  imposed to the user, e.g., there is no requirement for packages like
-  `zoo` or `xts`.
+- Dependencies related to data analysis are not imposed to the user,
+  e.g., there is no requirement for packages like `zoo` or `xts`.

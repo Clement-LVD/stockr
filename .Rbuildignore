@@ -4,3 +4,8 @@
 ^LICENSE\.md$
 ^docs
 ^junk_notes
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^cran-comments\.md$
