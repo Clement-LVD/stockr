@@ -49,7 +49,7 @@ str(toyota_indices) # Results of the day, over all marketplaces
 
 Typically, you start by retrieving an exact ticker symbol using `stockr::fetch_indices` or another way. You can then use these ticker symbols to fetch the corresponding historical financial data (see below).
 
-**Fetch historical financial data.**
+**Fetch historical financial data with.**  Given a ticker symbol, get financial values with `stockr::fetch_historic` :
 
 ```{r example2}
 
@@ -61,7 +61,7 @@ str(histo)
 
 This `data.frame` contain daily value.
 
-**Chaining examples 1 & 2.** Fetch ticker symbols associated with a keyword such as companies names, and get historical financial data for these symbols. 
+**Chaining examples 1 & 2.** Fetch ticker symbols associated with keyword(s) such as companies names, and get historical financial data for these symbols. 
 
 ```{r example3}
 # 1) fetch_indices (optionally filter a precise marketplace)

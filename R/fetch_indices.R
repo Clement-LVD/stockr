@@ -8,8 +8,9 @@
 #' , exchange marketplace name and initially searched companies names.
 #'
 #' @param names A character string representing the company name to search for.
-#' @param marketplaces (optionnal) A character string representing the marketplace(s) to consider. Default keep all the marketplace
+#' @param marketplaces (optionnal) A character string representing the marketplace(s) to consider. Default keep all the marketplace.
 #' @return A data frame with columns:
+#'
 #' 	- `symbol`: The stock ticker symbol from yahoo
 #' 	- `name`: The full company name.
 #' 	- `last_price`: The latest available price.
