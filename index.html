@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Get stock indices from companies names (yahoo datas) • stockr</title>
+<title>Retrieve Data from Yahoo Finance API • stockr</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Get stock indices from companies names (yahoo datas)">
-<meta name="description" content="Get stock indices from companies names (yahoo datas).">
-<meta property="og:description" content="Get stock indices from companies names (yahoo datas).">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Retrieve Data from Yahoo Finance API">
+<meta name="description" content="Retrieve financial data from the Yahoo Finance API, given company names or stock ticker symbols.">
+<meta property="og:description" content="Retrieve financial data from the Yahoo Finance API, given company names or stock ticker symbols.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -50,9 +50,10 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><code>stockr</code> is an R package that offers an efficient standardized approach to retrieve financial data.</p>
-<p>Data are fetched from the Yahoo Finance API, <em>given company names and/or indices</em>.</p>
-<p><code>stockr</code> functions are designed to return a standardized <code>data.frame</code> with standardized column names, values, and attributes. The package’s aim is to help you to quickly reach the point where you have financial data to analyze, but no assumptions are made about the analysis tools you’ll used (e.g., no dependencies on <code>zoo</code> or <code>xts</code> for time series analysis).</p>
+<p><code>stockr</code> is an R package that retrieve financial data from the Yahoo Finance API, given company names or stock ‘ticker’ symbols.</p>
+<blockquote>
+<p><code>stockr</code> functions return a standardized <code>data.frame</code> with consistent column names, allowing you to focus directly on financial analysis.</p>
+</blockquote>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -61,21 +62,39 @@
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"clement-LVD/stockr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
+<p><strong>Fetch ticker symbol and actual values (scraping).</strong> Given a keyword, search informations on <a href="https://finance.yahoo.com/lookup/" class="external-link uri">https://finance.yahoo.com/lookup/</a> with <code><a href="reference/fetch_indices.html">stockr::fetch_indices</a></code></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/clement-LVD/stockr" class="external-link">stockr</a></span><span class="op">)</span></span>
-<span><span class="co"># get indices names on the swedish marketplace</span></span>
-<span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_stock_indices.html">fetch_stock_indices</a></span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLVO"</span>, <span class="st">"SAAB"</span><span class="op">)</span> , marketplaces <span class="op">=</span> <span class="st">"STO"</span><span class="op">)</span></span>
-<span><span class="co"># search for historical values</span></span>
-<span><span class="va">datas</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_historic.html">fetch_historic</a></span><span class="op">(</span>symbols <span class="op">=</span> <span class="va">indices</span><span class="op">$</span><span class="va">symbol</span> <span class="op">)</span></span>
-<span><span class="co">#&gt; ETA :  1  sec'</span></span>
+<span><span class="co"># get all the values answered by https://finance.yahoo.com/lookup/</span></span>
+<span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_indices.html">fetch_indices</a></span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TOYOTA"</span><span class="op">)</span>  <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">indices</span><span class="op">)</span> <span class="co"># all the last results over all marketplaces</span></span>
+<span><span class="co">#&gt; 'data.frame':    25 obs. of  7 variables:</span></span>
+<span><span class="co">#&gt;  $ symbol           : chr  "TM" "TOMA.MU" "7203.T" "TAH0.MU" ...</span></span>
+<span><span class="co">#&gt;  $ name             : chr  "Toyota Motor Corporation" "TOYOTA MOTOR CORP.            R" "TOYOTA MOTOR CORP" "Toyota Industries Corp.       R" ...</span></span>
+<span><span class="co">#&gt;  $ last price       : chr  "190.70" "178.00" "2,844.50" "86.00" ...</span></span>
+<span><span class="co">#&gt;  $ sector / category: chr  "Consumer Cyclical" "Consumer Cyclical" "Consumer Cyclical" "Industrials" ...</span></span>
+<span><span class="co">#&gt;  $ type             : chr  "Stocks" "Stocks" "Stocks" "Stocks" ...</span></span>
+<span><span class="co">#&gt;  $ exchange         : chr  "NYQ" "MUN" "JPX" "MUN" ...</span></span>
+<span><span class="co">#&gt;  $ searched         : chr  "TOYOTA" "TOYOTA" "TOYOTA" "TOYOTA" ...</span></span></code></pre></div>
+<p>Typically, you first retrieve the exact ticker symbol by analyzing the results of <code><a href="reference/fetch_indices.html">stockr::fetch_indices</a></code>. Then, you can use this symbol to fetch the corresponding historical financial data (see below).</p>
+<p><strong>Fetch historical financial data (Yahoo API).</strong></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># (Optionally filter a precise marketplace)</span></span>
+<span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_indices.html">fetch_indices</a></span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLVO"</span>, <span class="st">"SAAB"</span><span class="op">)</span>, marketplaces <span class="op">=</span> <span class="st">"STO"</span><span class="op">)</span></span>
+<span><span class="co"># We keep only the swedish marketplace (STOckholm) informations</span></span>
+<span></span>
+<span><span class="co"># Fetch historical values, given ticker symbol(s)</span></span>
+<span><span class="va">datas</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_historic.html">fetch_historic</a></span><span class="op">(</span>symbols <span class="op">=</span> <span class="va">indices</span><span class="op">$</span><span class="va">symbol</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; =&gt; 4 request(s) to Yahoo Finance (ETA :  1  sec')VOLCAR-B.ST [OK]                                                                                                    VOLV-A.ST [OK]                                                                                                    VOLV-B.ST [OK]                                                                                                    SAAB-B.ST [OK]                                                                                                    </span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">datas</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    20070 obs. of  15 variables:</span></span>
-<span><span class="co">#&gt;  $ high            : num  67.4 68.4 60.8 58.9 59.9 ...</span></span>
 <span><span class="co">#&gt;  $ open            : num  58.8 65.6 60.6 58 59.5 ...</span></span>
 <span><span class="co">#&gt;  $ close           : num  65.2 60.6 58 58.9 59.1 ...</span></span>
+<span><span class="co">#&gt;  $ high            : num  67.4 68.4 60.8 58.9 59.9 ...</span></span>
 <span><span class="co">#&gt;  $ volume          : int  70977504 20388814 14497507 7963166 2874916 1228461 2989143 1889096 1866615 7365218 ...</span></span>
 <span><span class="co">#&gt;  $ low             : num  55 59 56.6 55.8 58 ...</span></span>
 <span><span class="co">#&gt;  $ adjclose        : num  65.2 60.6 58 58.9 59.1 ...</span></span>
@@ -92,13 +111,18 @@
 <div class="section level2">
 <h2 id="programming-philosophy">Programming philosophy<a class="anchor" aria-label="anchor" href="#programming-philosophy"></a>
 </h2>
-<p><code>stockr</code> offering a standardized <code>data.frame</code> and methods for retrieve financial data.</p>
+<p>The <code>stockr</code> functions (<code>fetch_historic</code> &amp; <code>fetch_indices</code>) returns a standardized <code>data.frame</code> containing financial data from the Yahoo Finance API:</p>
 <ul>
-<li><p>Company names can be provided to <code>stockr</code> instead of specific ticker symbols, allowing the package to rely on a standardized logic when the exact financial identifier of a company on a given stock exchange is unknown.</p></li>
-<li><p>The variable names in the returned <code>data.frame</code> are stable and inherited from the Yahoo Finance API, though they are converted to lowercase.</p></li>
-<li><p>The returned tables are always simple data.frame objects. Thus, it’s up to you to construct data-analysis objects, e.g., time series objects.</p></li>
-<li><p>Dependencies related to data analysis are not imposed to the user, e.g., there is no requirement for packages like <code>zoo</code> or <code>xts</code>.</p></li>
+<li><p>The variable names in the returned <code>data.frame</code> are consistent and inherited directly from the Yahoo Finance API, although they are converted to lowercase.</p></li>
+<li><p>The returned data is always in the form of a simple <code>data.frame</code> object, i.e. does not return time series objects.</p></li>
+<li><dl>
+<dt>No specific data analysis package dependencies are imposed on the user</dt>
+<dd>
+no assumptions are made about the analysis tools you’ll used (e.g., no dependencies on <code>zoo</code> or <code>xts</code> for time series analysis).
+</dd>
+</dl></li>
 </ul>
+<p>It is up to the user to create more advanced data analysis objects from the returned data.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

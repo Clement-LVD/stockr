@@ -136,13 +136,13 @@ it retrieves all available data from the beginning of time (default for start) t
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">get_yahoo_data</span><span class="op">(</span>symbol <span class="op">=</span> <span class="st">"SAAB-B.ST"</span>, start_date <span class="op">=</span> <span class="st">"2020-01-01"</span>, interval <span class="op">=</span> <span class="st">"5d"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="co">#'</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    volume   open    low   high  close adjclose  timestamp                date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1671108 84.575 83.825 85.050 85.050 80.94995 1579161600 2020-01-16 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  888888 86.000 84.750 86.000 85.300 81.18790 1579593600 2020-01-21 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 1271576 78.825 77.925 79.350 78.300 74.52535 1580457600 2020-01-31 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 1503696 81.750 81.300 83.400 83.300 79.28432 1580889600 2020-02-05 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2685416 79.800 77.200 80.025 77.500 73.76392 1581321600 2020-02-10 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 1220424 74.500 73.900 75.000 73.925 70.36127 1582185600 2020-02-20 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     high  close   open  volume    low adjclose  timestamp                date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 85.050 85.050 84.575 1671108 83.825 80.94994 1579161600 2020-01-16 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 86.000 85.300 86.000  888888 84.750 81.18790 1579593600 2020-01-21 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 79.350 78.300 78.825 1271576 77.925 74.52534 1580457600 2020-01-31 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 83.400 83.300 81.750 1503696 81.300 79.28432 1580889600 2020-02-05 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 80.025 77.500 79.800 2685416 77.200 73.76392 1581321600 2020-02-10 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 75.000 73.925 74.500 1220424 73.900 70.36126 1582185600 2020-02-20 08:00:00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   currency    symbol       longname      shortname exchangename</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      SEK SAAB-B.ST Saab AB (publ) SAAB AB ser. B          STO</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      SEK SAAB-B.ST Saab AB (publ) SAAB AB ser. B          STO</span>
@@ -159,8 +159,8 @@ it retrieves all available data from the beginning of time (default for start) t
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6        Stockholm      CET</span>
 <span class="r-in"><span>  <span class="va">invalid_datas</span> <span class="op">&lt;-</span> <span class="fu">get_yahoo_data</span><span class="op">(</span>symbol <span class="op">=</span><span class="st">"SAAB"</span> <span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The value is not associated with a valid currency name !</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> =&gt; SAAB is not a valid currency name, according to the Yahoo Finance API.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See : https://finance.yahoo.com/ or stockr::fetch_stock_indices</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> =&gt; SAAB is not a valid name, according to the Yahoo Finance API.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See : https://finance.yahoo.com/ for valid names</span>
 <span class="r-in"><span>  <span class="va">invalid_datas</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
 </code></pre></div>
