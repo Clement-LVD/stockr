@@ -136,13 +136,13 @@ it retrieves all available data from the beginning of time (default for start) t
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">get_yahoo_data</span><span class="op">(</span>symbol <span class="op">=</span> <span class="st">"SAAB-B.ST"</span>, start_date <span class="op">=</span> <span class="st">"2020-01-01"</span>, interval <span class="op">=</span> <span class="st">"5d"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="co">#'</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     open  close  volume   high    low adjclose  timestamp                date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 84.575 85.050 1671108 85.050 83.825 80.94995 1579161600 2020-01-16 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 86.000 85.300  888888 86.000 84.750 81.18790 1579593600 2020-01-21 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 78.825 78.300 1271576 79.350 77.925 74.52535 1580457600 2020-01-31 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 81.750 83.300 1503696 83.400 81.300 79.28431 1580889600 2020-02-05 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 79.800 77.500 2685416 80.025 77.200 73.76392 1581321600 2020-02-10 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 74.500 73.925 1220424 75.000 73.900 70.36127 1582185600 2020-02-20 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    volume   open    low   high  close adjclose  timestamp                date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1671108 84.575 83.825 85.050 85.050 80.94995 1579161600 2020-01-16 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  888888 86.000 84.750 86.000 85.300 81.18790 1579593600 2020-01-21 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 1271576 78.825 77.925 79.350 78.300 74.52535 1580457600 2020-01-31 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 1503696 81.750 81.300 83.400 83.300 79.28432 1580889600 2020-02-05 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2685416 79.800 77.200 80.025 77.500 73.76392 1581321600 2020-02-10 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 1220424 74.500 73.900 75.000 73.925 70.36127 1582185600 2020-02-20 08:00:00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   currency    symbol       longname      shortname exchangename</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      SEK SAAB-B.ST Saab AB (publ) SAAB AB ser. B          STO</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      SEK SAAB-B.ST Saab AB (publ) SAAB AB ser. B          STO</span>
