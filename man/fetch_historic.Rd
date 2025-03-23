@@ -2,7 +2,7 @@
 % Please edit documentation in R/fetch_historic.R
 \name{fetch_historic}
 \alias{fetch_historic}
-\title{Fetch stock indices with \code{quantmod}}
+\title{Fetch historical financial data indices}
 \usage{
 fetch_historic(
   symbols = c("SAAB-B.ST"),
@@ -35,9 +35,7 @@ A data frame with columns:
 }
 \description{
 Given indices names, the function retrieves historical stock market data
-(from finance.yahoo.com by default).
-It returns the data frame returned by quantmod::getSymbols
-with a proper date column, standardized colnames.
+(from finance.yahoo.com by default). Answer a \code{data.frame} with standardized colnames.
 }
 \examples{
 datas <- fetch_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )

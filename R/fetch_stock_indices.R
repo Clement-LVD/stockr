@@ -19,15 +19,14 @@
 #'  - `searched`: The original names searched
 #' @examples
 #' fetch_stock_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO"  )
+#' @seealso \code{\link{get_yahoo_data}},  \code{\link{fetch_historic}}
 #' @importFrom XML readHTMLTable
 #' @importFrom utils URLencode
 #' @export
 fetch_stock_indices <- function(names, marketplaces = NULL) {
 base_url = "https://finance.yahoo.com/lookup/equity/?s="
-  #0-A) construire une url valide
 
-  # Construire l'URL de recherche avec encodage des accents et espaces
-  name_encode <- URLencode(names)
+  name_encode <- utils::URLencode(names)
   url_complete <- paste0(base_url, name_encode)
 
   if(length(names) > 1) { #ON VA REMPLIR L'OBJET LISTE_TOTALE

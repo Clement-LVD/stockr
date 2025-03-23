@@ -1,9 +1,7 @@
-#' Fetch stock indices with `quantmod`
+#' Fetch historical financial data indices
 #'
 #' Given indices names, the function retrieves historical stock market data
-#' (from finance.yahoo.com by default).
-#' It returns the data frame returned by quantmod::getSymbols
-#'  with a proper date column, standardized colnames.
+#' (from finance.yahoo.com by default). Answer a `data.frame` with standardized colnames.
 #'
 #' @param symbols `character` A character string representing the indices to search for.
 #' @param wait.time `double` A character string representing the indices to search for.
