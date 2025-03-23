@@ -18,11 +18,11 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-`stockr` is a R package that provide stock datas, given companies names.
+`stockr` is a R package that provide stock datas from Yahoo Finance, given companies names and/or indices names.
 
 ## Installation
 
-You can install the development version of stockr like so:
+You can install the development version of stockr:
 
 ``` r
 devtools::install_github("clement-LVD/stockr")
@@ -37,6 +37,7 @@ indices <- fetch_stock_indices(names = c("VOLVO", "SAAB") , marketplaces = "STO"
 # search for historical values
 datas <- fetch_historic(symbols = indices$symbol )
 
+str(datas)
 ```
 
 

@@ -2,6 +2,7 @@
 
 export(fetch_historic)
 export(fetch_stock_indices)
+export(get_yahoo_data)
 importFrom(XML,readHTMLTable)
-importFrom(quantmod,getSymbols)
+importFrom(jsonlite,fromJSON)
 importFrom(utils,URLencode)

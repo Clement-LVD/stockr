@@ -20,8 +20,7 @@
 #'  - `date`: The date for these values
 #' @examples
 #' datas <- fetch_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )
-#' @seealso \url{https://www.quantmod.com/documentation/getSymbols.html}
-#' @importFrom quantmod getSymbols
+#' @seealso \code{\link{get_yahoo_data}}
 #' @export
 fetch_historic <- function(symbols = c("SAAB-B.ST"), wait.time = 0,.verbose = T, src = "yahoo"){
 
@@ -31,16 +30,11 @@ fetch_historic <- function(symbols = c("SAAB-B.ST"), wait.time = 0,.verbose = T,
 
   result_actions = list()
 
-stocks <- lapply(symbols, FUN = function(action) {
+stocks <- lapply(symbols, FUN = function(symbol) {
 
-    results <- quantmod::getSymbols(action,  auto.assign = F, src = src, verbose = .verbose )
+    results <- get_yahoo_data(symbol)
 
     results <-   as.data.frame(results)
-# quantmod is full of for loop and never return the same colnames, always with maj. :s
-    colnames(results) <- tolower(gsub(x = colnames(results), pattern = paste0(action, "\\."), replacement = "" ) )
-    # we have lowered the colnames
-    results$symbol <- action
-    results$date <- rownames(results)
 
      Sys.sleep(wait.time)
 

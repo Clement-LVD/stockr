@@ -43,5 +43,5 @@ with a proper date column, standardized colnames.
 datas <- fetch_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )
 }
 \seealso{
-\url{https://www.quantmod.com/documentation/getSymbols.html}
+\code{\link{get_yahoo_data}}
 }

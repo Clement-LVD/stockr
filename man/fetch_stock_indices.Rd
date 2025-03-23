@@ -32,5 +32,5 @@ sector/category (if available), type (always "stocks")
 , exchange marketplace name and initially searched companies names.
 }
 \examples{
-fetch_stock_indices(names = c("VOLVO", "SAAB") )
+fetch_stock_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO"  )
 }
