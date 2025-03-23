@@ -46,7 +46,9 @@ Given indices names (i.e. ticker symbol), the function retrieves historical stoc
 from finance.yahoo.com. Answer a \code{data.frame} with standardized colnames.
 }
 \examples{
+\donttest{
 datas <- fetch_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )
+}
 }
 \seealso{
 \code{\link{get_yahoo_data}}

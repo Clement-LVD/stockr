@@ -18,12 +18,17 @@
 #' 	- `exchange`: The stock exchange place for this stock.
 #'  - `searched`: The original names searched
 #' @examples
+#' \donttest{
 #' fetch_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO")
+#' }
 #' @seealso \code{\link{get_yahoo_data}},  \code{\link{fetch_historic}}
 #' @importFrom XML readHTMLTable
 #' @importFrom utils URLencode
 #' @export
 fetch_indices <- function(names, marketplaces = NULL) {
+
+  if(!internet_or_not()) warning("No Internet connection. Please check your network")
+
 base_url = "https://finance.yahoo.com/lookup/equity/?s="
 
   name_encode <- utils::URLencode(names)

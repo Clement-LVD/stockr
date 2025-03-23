@@ -59,7 +59,7 @@ histo <- stockr::fetch_historic(symbols = c("SAAB-B.ST", "VOLV-B.ST"), .verbose 
 str(histo)
 ```
 
-This historical `data.frame` contain daily value.
+This `data.frame` contain daily value.
 
 **Chaining examples 1 & 2.** Fetch ticker symbols associated with a keyword such as companies names, and get historical financial data for these symbols. 
 

@@ -32,7 +32,9 @@ sector/category (if available), type (always "stocks")
 , exchange marketplace name and initially searched companies names.
 }
 \examples{
+\donttest{
 fetch_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO")
+}
 }
 \seealso{
 \code{\link{get_yahoo_data}},  \code{\link{fetch_historic}}

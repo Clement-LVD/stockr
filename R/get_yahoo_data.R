@@ -37,16 +37,16 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom utils URLencode
 #' @examples
+#' \donttest{
 #'   data <- get_yahoo_data(symbol = "SAAB-B.ST", start_date = "2020-01-01", interval = "5d")
-#'   head(data)#'
-#'   invalid_datas <- get_yahoo_data(symbol ="SAAB" )
-#'   invalid_datas
+#'   head(data)
+#'   }
 #' @export
 get_yahoo_data <- function(symbol = "AAPL", start_date = NULL, end_date = NULL, interval = "1d") {
 
   if(length(symbol) > 1){
     symbol <- symbol[[1]]
-warning(immediate. = T, "Only one symbol should be passed and you have indicated several !
+warning(immediate. = T, "Only one symbol should be passed and you have indicated several.
 \nOnly the 1st of these symbols will be considered, i.e. ", symbol)
   }
 
@@ -55,7 +55,7 @@ warning(immediate. = T, "Only one symbol should be passed and you have indicated
     stop("Specified interval ('",interval, "') is not a valid range. \nChoices are : ", paste0(collapse= ", ", valid_ranges ))
   }
 
-   # Si les dates sont spécifiées, les convertir en timestamps Unix
+   # convert date to timestamps Unix
   if (!is.null(start_date)) {
     start_timestamp <- as.integer(as.POSIXct(start_date, tz = "UTC"))
   } else {
@@ -105,7 +105,7 @@ See : https://finance.yahoo.com/ for valid names")
     return(NA)
   }
 
-  if(is.null(connection)) return(NULL) # It's certainly a default from the user (e.g., no internet or no proxy)
+  if(is.null(connection)) return(NULL) # It's certainly a default from the user (e.g., don't pass the good value)
 
   response_text <- readLines(connection, warn = F)
 

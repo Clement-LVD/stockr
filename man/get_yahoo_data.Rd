@@ -54,8 +54,8 @@ The function allows the user to specify a date range using start and end dates. 
 it retrieves all available data from the beginning of time (default for start) to the current date (default for end).
 }
 \examples{
+\donttest{
   data <- get_yahoo_data(symbol = "SAAB-B.ST", start_date = "2020-01-01", interval = "5d")
-  head(data)#'
-  invalid_datas <- get_yahoo_data(symbol ="SAAB" )
-  invalid_datas
+  head(data)
+  }
 }

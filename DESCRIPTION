@@ -1,10 +1,10 @@
 Package: stockr
-Title: Retrieve Data from Yahoo Finance API
-Version: 0.0.0.9000
+Title: Fetch Financial Data
+Version: 0.1
 Authors@R:
     person("Clément", "Laverdet", , "clementlvd@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-4466-3394"))
-Description: Retrieve financial data from the Yahoo Finance API, given company names or stock 'ticker' symbols.
+Description: An R package to fetch financial data from Yahoo Finance, given company names or ticker symbols.
 License: MIT + file LICENSE
 URL: https://github.com/clement-LVD/stockr,
     https://clement-lvd.github.io/stockr/
