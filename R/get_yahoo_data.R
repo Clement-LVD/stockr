@@ -121,9 +121,8 @@ See : https://finance.yahoo.com/ for valid names")
 indicators <- data$chart$result$indicators
 quote_data <- indicators$quote[[1]]
 
-quote_data<-append(quote_data, data$chart$result$indicators$adjclose[[1]]
-                   ,
-)
+quote_data<-append(quote_data, data$chart$result$indicators$adjclose[[1]] )
+
 df_historical_values <-  data.frame(lapply(quote_data, unlist))
 # add timestamp
 df_historical_values$timestamp <- data$chart$result$timestamp[[1]]
@@ -131,7 +130,9 @@ df_historical_values$date <- as.POSIXct(df_historical_values$timestamp)
 
 # and the overall datas interesting for us :
 meta_datas <- data$chart$result$meta
-col_to_add <- meta_datas[, c("currency", "symbol","longName",  "shortName" , "exchangeName", "fullExchangeName","timezone")]
+
+
+col_to_add <- meta_datas[, c("currency", "symbol",  "shortName" , "exchangeName", "fullExchangeName","timezone")]
  # "regularMarketPrice" is redundant with the ADJUSTED (!) price at closing time or the opening
 
 df_historical_values <- data.frame( df_historical_values,  col_to_add, check.names = FALSE, row.names = NULL)

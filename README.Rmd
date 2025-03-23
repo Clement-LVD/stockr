@@ -39,21 +39,33 @@ devtools::install_github("clement-LVD/stockr")
 
 ```{r example}
 library(stockr)
-# get all the values answered by https://finance.yahoo.com/lookup/
-indices <- fetch_indices(names = c("TOYOTA")  )
-str(indices) # all the last results over all marketplaces
+
+toyota_indices <- fetch_indices(names = "TOYOTA")
+
+str(toyota_indices) # Results of the day, over all marketplaces
 ```
 
-Typically, you first retrieve the exact ticker symbol by analyzing the results of `stockr::fetch_indices`. Then, you can use this symbol to fetch the corresponding historical financial data (see below).
+Typically, you start by retrieving the exact ticker symbol using `stockr::fetch_indices`. For example, Toyota's stock on the '`r toyota_indices$exchange[1]`'  is identified by the ticker symbol '`r toyota_indices$symbol[1]`'. You can then use these ticker symbols to fetch the corresponding historical financial data (see below).
 
 **Fetch historical financial data (Yahoo API).**
 
 ```{r example2}
-# (Optionally filter a precise marketplace)
-indices <- fetch_indices(names = c("VOLVO", "SAAB"), marketplaces = "STO")
-# We keep only the swedish marketplace (STOckholm) informations
 
 # Fetch historical values, given ticker symbol(s)
+saab_histo <- fetch_historic(symbols = "SAAB-B.ST", .verbose = FALSE)
+
+str(saab_histo)
+```
+
+**Chaining examples 1 & 2.**
+
+```{r example3}
+# 1) fetch_indices (optionally filter a precise marketplace)
+indices <- fetch_indices(names = c("VOLVO", "SAAB", "TOYOTA")
+                         , marketplaces = "BER")
+# Keep only the german marketplace (BERlin) informations
+
+# 2) Fetch historical values, given ticker symbol(s)
 datas <- fetch_historic(symbols = indices$symbol)
 
 str(datas)
@@ -65,9 +77,9 @@ The `stockr` functions (`fetch_historic` & `fetch_indices`) returns a standardiz
 
 - The variable names in the returned `data.frame` are consistent and inherited directly from the Yahoo Finance API, although they are converted to lowercase.
 
-- The returned data is always in the form of a simple `data.frame` object, i.e. does not return time series objects.
+- The returned data is always in the form of a simple `data.frame` object.
 
-- No specific data analysis package dependencies are imposed on the user : no assumptions are made about the analysis tools you'll used (e.g., no dependencies on `zoo` or `xts` for time series analysis).
+- No specific data analysis package dependencies are imposed on the user : no assumptions are made about the analysis tools you'll used (e.g., no dependencies on `zoo` or `xts` for time series analysis since `stockr` does not return time series objects).
 
 It is up to the user to create more advanced data analysis objects from the returned data.
 

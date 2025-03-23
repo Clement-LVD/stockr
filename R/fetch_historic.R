@@ -34,13 +34,13 @@ stocks <- lapply(symbols, FUN = function(symbol) {
 
      Sys.sleep(wait.time)
 
-if(.verbose) cat("\r"); cat(symbol, "[OK]", rep(" ", 50))
+if(.verbose){ cat("\r"); cat(' ', symbol, "[OK]", rep(" ", 50))}
 
     return(results)
 
     })
 
    returned_results <- do.call(rbind, stocks)
-   if(.verbose) cat("\r"); cat(rep(" ", 50))
+   if(.verbose){cat("\r"); cat(rep(" ", 50))}
    return(returned_results)
 }
