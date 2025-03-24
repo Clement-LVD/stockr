@@ -16,23 +16,28 @@ fetch_historic(symbols = c("SAAB-B.ST"), wait.time = 0, .verbose = T, ...)
 \item{...}{Parameters passed to \code{get_yahoo_data} such as the \code{interval} between two lines, a start_date or end_date}
 }
 \value{
-A data frame with columns:
-- \code{low}: Lowest value of the indice during this day.
-- \code{high}: Highest value of the indice during this day.
-- \code{close}: Value at the closing of the maketplace.
-- \code{open}: The value at the opening of the marketplace
-- \code{volume}: The volume of operation.
-- \code{adjclose}: The adjusted closing value.
-\itemize{
-\item \code{timestamp}: The date for these values
-\item \code{date}: The date for these values
-\item \code{symbol}: The original indices names searched
-\item \code{shortname}: The name of the value
-\item \code{exchangename}: The financial place abbreviation
-\item \code{fullexchangename}: The full name of the financial place
-\item \code{timezone}: The timezone, e.g., 'CET' for Central European Time
+A data frame containing the historical financial data with the following columns:
+\item{open}{\code{numeric} The opening price for the period (default is each day).}
+\item{close}{\code{numeric} The closing price for the period (default is each day).}
+\item{adjclose}{\code{numeric} The adjusted closing price on the period, which accounts for corporate actions like dividends and stock splits.}
+\item{low}{\code{numeric} The lowest price for the period (default is each day).}
+\item{high}{\code{numeric} The highest price for the period (default is each day).}
+\item{volume}{\code{integer} The traded volume.}
+\item{timestamp}{\code{integer} Unix timestamps corresponding to each data point.}
+\item{date}{\code{POSIXct} The day of the financial data point.}
+\item{currency}{\code{character} The currency in which the data is reported, depending on the marketplace.}
+\item{symbol}{\code{character} The stock or financial instrument symbol (e.g., "AAPL").}
+\item{shortname}{\code{character} The abbreviated name of the company or financial instrument.}
+\item{longname}{\code{character} The full name of the company or financial instrument.}
+\item{exchangename}{\code{character} The name of the exchange marketplace where the financial instrument is listed.}
+\item{fullexchangename}{\code{character} The full name of the exchange marketplace.}
+\item{timezone}{\code{character} The timezone in which the data is reported.}
 }
-
+\description{
+Given indices names (i.e. ticker symbol), the function retrieves historical stock market data
+from finance.yahoo.com. Answer a \code{data.frame} with standardized colnames.
+}
+\details{
 This \code{data.frame} have additional attributes :
 \itemize{
 \item \code{fetch.symbols}: the symbols originally asked by the user
@@ -41,14 +46,9 @@ This \code{data.frame} have additional attributes :
 \item \code{n.currencies}: the number of currencies within the \code{data.frame}
 }
 }
-\description{
-Given indices names (i.e. ticker symbol), the function retrieves historical stock market data
-from finance.yahoo.com. Answer a \code{data.frame} with standardized colnames.
-}
 \examples{
-\donttest{
 datas <- fetch_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )
-}
+
 }
 \seealso{
 \code{\link{get_yahoo_data}}

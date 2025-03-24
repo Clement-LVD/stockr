@@ -1,78 +1,42 @@
-#' Fetch ticker stock indices based on a company name
+#' Fetch Financial Indices
 #'
-#' Given companies names, the function retrieves overall stock market data
-#' (by searching on https://finance.yahoo.com ).
-#' It returns a data frame with the ticker symbol on various marketplaces
-#' , companies names, last price on the marketplace,
-#' sector/category (if available), type (always "stocks")
-#' , exchange marketplace name and initially searched companies names.
+#' This function fetches a table of financial indices (currencies) from Yahoo Finance.
+#' Optionally, it can filter the results to include only the specified indices.
 #'
-#' @param names A character string representing the company name to search for.
-#' @param marketplaces (optionnal) A character string representing the marketplace(s) to consider. Default keep all the marketplace.
-#' @return A data frame with columns:
+#' @param keep_only A character vector of symbols to filter the results. If NULL (default),
+#'                  no filtering is applied, and all available indices are returned.
 #'
-#' 	- `symbol`: The stock ticker symbol from yahoo
-#' 	- `name`: The full company name.
-#' 	- `last_price`: The latest available price.
-#' 	- `sector_category`: The sector or industry category (if available).
-#' 	- `type`: The type of asset (always "stocks").
-#' 	- `exchange`: The stock exchange place for this stock.
-#'  - `searched`: The original names searched
+#' @return A data frame containing unique financial indices (currencies). The table has
+#'         columns like `symbol`, `name`, and other relevant information, with all column names in lowercase.
+#'         If `keep_only` is specified, only the matching indices are returned.
+#'
+#' @details The function sends a request to Yahoo Finance's API to fetch a list of available currencies.
+#'          It then processes the results and returns them as a data frame. If an internet connection is not available,
+#'          a warning message is shown.
+#'
 #' @examples
-#' \donttest{
-#' fetch_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO")
-#' }
-#' @seealso \code{\link{get_yahoo_data}},  \code{\link{fetch_historic}}
-#' @importFrom XML readHTMLTable
-#' @importFrom utils URLencode
+#' # Fetch all available indices
+#' all_indices <- fetch_indices()
+#'
+#' # Fetch only specific indices
+#' selected_indices <- fetch_indices(keep_only = c("USD", "EUR"))
+#'
 #' @export
-fetch_indices <- function(names, marketplaces = NULL) {
-
-  if(!internet_or_not()) warning("No Internet connection. Please check your network")
-
-base_url = "https://finance.yahoo.com/lookup/equity/?s="
-
-  name_encode <- utils::URLencode(names)
-  url_complete <- paste0(base_url, name_encode)
-
-  if(length(names) > 1) { #ON VA REMPLIR L'OBJET LISTE_TOTALE
+fetch_indices <- function(keep_only = NULL) {
 
 
-      # sinon c'est plus compliqué car il faut rbind tous les résultats ^^
-      results <- do.call(rbind, lapply(names, function(name) {
-        # Appeler la fonction pour chaque terme et renvoyer le résultat
-        fetch_indices(name)
-      }))
+  if(!internet_or_not()) return(NA)
 
-if(!is.null(marketplaces) ) {results <- results[which(results$exchange %in% marketplaces), ]}
+  url <- "https://query1.finance.yahoo.com/v1/finance/currencies"
 
-      # Afficher le résultat final
-      return(unique(results))
+    currencies <- fetch_yahoo_api(url)
 
+    results <- currencies$currencies$result
 
-    } else name = names
+    # filter indices
+    if(!is.null(keep_only) ) {results <- results[which(results$symbol  %in% keep_only), ]}
 
-# LA FONCTION PROPREMENT DITE COMMENCE ICI
-# 1) Lire la page web
+    colnames(results) <- tolower(colnames(results))
 
-  # Lire le contenu HTML de la page web
-  page_source <- readLines(url_complete, warn = FALSE)
-  # Coller les lignes ensemble pour reformer le HTML complet
-  page_html <- paste(page_source, collapse = "\n")
-tables <-  XML::readHTMLTable(page_html,  stringsAsFactors = FALSE)
-
-# Vérifier ce qui a été extrait
-if (!is.null(tables) && length(tables) > 0) {
-  table  <- tables[[1]]  # Première table
-  table$searched <- name
-} else {
-  table  <- NULL
-}
-
-colnames(table) <- trimws(tolower(colnames(table)))
-colnames(table) <- gsub(x = colnames(table), " / | ", "_")
-return(unique(table))
-}
-
-
-
+    return(unique(results))
+  }

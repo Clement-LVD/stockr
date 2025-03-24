@@ -19,30 +19,32 @@
 #' Valid interval are "1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", and "max".
 #'
 #' @return A data frame containing the historical financial data with the following columns:
-#'   \item{volume}{`integer` The traded volume.}
-#'   \item{high}{`numeric` The highest price for the period (default is each day).}
 #'   \item{open}{`numeric` The opening price for the period (default is each day).}
-#'   \item{low}{`numeric` The lowest price for the period (default is each day).}
 #'   \item{close}{`numeric` The closing price for the period (default is each day).}
 #'   \item{adjclose}{`numeric` The adjusted closing price on the period, which accounts for corporate actions like dividends and stock splits.}
+#'   \item{low}{`numeric` The lowest price for the period (default is each day).}
+#'   \item{high}{`numeric` The highest price for the period (default is each day).}
+#'   \item{volume}{`integer` The traded volume.}
 #'   \item{timestamp}{`integer` Unix timestamps corresponding to each data point.}
 #'   \item{date}{`POSIXct` The day of the financial data point.}
-#'   \item{currency}{The currency in which the data is reported, depending on the marketplace.}
-#'   \item{symbol}{The stock or financial instrument symbol (e.g., "AAPL").}
-#'   \item{longname}{The full name of the company or financial instrument.}
-#'   \item{shortname}{The abbreviated name of the company or financial instrument.}
-#'   \item{exchangename}{The name of the exchange marketplace where the financial instrument is listed.}
-#'   \item{fullexchangename}{The full name of the exchange marketplace.}
-#'   \item{timezone}{The timezone in which the data is reported.}
-#' @importFrom jsonlite fromJSON
-#' @importFrom utils URLencode
+#'   \item{currency}{`character` The currency in which the data is reported, depending on the marketplace.}
+#'   \item{symbol}{`character` The stock or financial instrument symbol (e.g., "AAPL").}
+#'   \item{shortname}{`character` The abbreviated name of the company or financial instrument.}
+#'   \item{longname}{`character` The full name of the company or financial instrument.}
+#'   \item{exchangename}{`character` The name of the exchange marketplace where the financial instrument is listed.}
+#'   \item{fullexchangename}{`character` The full name of the exchange marketplace.}
+#'   \item{timezone}{`character` The timezone in which the data is reported.}
 #' @examples
-#' \donttest{
+#'
 #'   data <- get_yahoo_data(symbol = "SAAB-B.ST", start_date = "2020-01-01", interval = "5d")
 #'   head(data)
-#'   }
+#'
 #' @export
 get_yahoo_data <- function(symbol = "AAPL", start_date = NULL, end_date = NULL, interval = "1d") {
+
+  if(length(symbol) > 1) message("You have to provide only one ticker symbol")
+
+  if(!all(valid_symbol(symbol))){ return(NA) }
 
   if(length(symbol) > 1){
     symbol <- symbol[[1]]
@@ -82,61 +84,42 @@ warning(immediate. = T, "Only one symbol should be passed and you have indicated
   # Create parameters for the yahoo url-api
   query_string <- paste(names(params), params, sep = "=", collapse = "&")
   full_url <- paste(url, "?", query_string, sep = "")
-  full_url <- utils::URLencode(full_url)
 
-  # answer readLines raw content
-  connection <- tryCatch({
-    # Attempt to open the connection
-    url(full_url, open = "r")
-  }, error = function(e) {
-    # If an error occurs, print a message and return NULL
-    cat("Error: ", e$message, "\n")
-    return(NULL) # no internet or other scenario
-  }, warning = function(w) {
-    warning_message <- w$message
-    if(grep(x = warning_message, "404 Not Found")){return(NA)}
-    # a warning is most of the times an error answered by the api # cat("Warning: ", w$message, "\n")
-    return(NULL) # non existent value
-  })
+  # fetch data
+    data <- fetch_yahoo_api(full_url)
 
-  if(is.na(connection)) {cat("The value is not associated with a valid currency name !\n=> "
-                                 , symbol, " is not a valid name, according to the Yahoo Finance API.
-See : https://finance.yahoo.com/ for valid names")
-    return(NA)
-  }
-
-  if(is.null(connection)) return(NULL) # It's certainly a default from the user (e.g., don't pass the good value)
-
-  response_text <- readLines(connection, warn = F)
-
-  close(connection)
-
-# the API query1.finance.yahoo.com/V8 answer JSON
-  # Convert JSON to a list
-  data <- jsonlite::fromJSON(paste(response_text, collapse = ""))
 
   #### data wrangling ####
   # deal with historical indicators list
 indicators <- data$chart$result$indicators
 quote_data <- indicators$quote[[1]]
 
-quote_data<-append(quote_data, data$chart$result$indicators$adjclose[[1]] )
+quote_data <- append(quote_data, data$chart$result$indicators$adjclose[[1]] )
 
-df_historical_values <-  data.frame(lapply(quote_data, unlist))
+df_historic <-  data.frame(lapply(quote_data, unlist))
+
+col_to_retain <- c("open","close" ,"adjclose" ,"low" , "high" , "volume" )
+# add fake col
+df_historic <- add_missing_var_to_df(df = df_historic, col_to_retain)
+
+df_historic <- df_historic[ , col_to_retain ]
+
 # add timestamp
-df_historical_values$timestamp <- data$chart$result$timestamp[[1]]
-df_historical_values$date <- as.POSIXct(df_historical_values$timestamp)
+df_historic$timestamp <- data$chart$result$timestamp[[1]]
+df_historic$date <- as.POSIXct(df_historic$timestamp)
 
 # and the overall datas interesting for us :
 meta_datas <- data$chart$result$meta
 
+to_retain <-  c("currency", "symbol",  "shortName" , "longName", "exchangeName", "fullExchangeName","timezone")
+meta_datas <- add_missing_var_to_df(df = meta_datas, to_retain)
 
-col_to_add <- meta_datas[, c("currency", "symbol",  "shortName" , "exchangeName", "fullExchangeName","timezone")]
+col_to_add <- meta_datas[, to_retain]
  # "regularMarketPrice" is redundant with the ADJUSTED (!) price at closing time or the opening
 
-df_historical_values <- data.frame( df_historical_values,  col_to_add, check.names = FALSE, row.names = NULL)
+df_historic <- data.frame( df_historic,  col_to_add, check.names = FALSE, row.names = NULL)
 # lot of redundancy but that's okaysh for the sake of limiting errors and misunderstood
-colnames(df_historical_values) <- tolower(colnames(df_historical_values))
+colnames(df_historic) <- tolower(colnames(df_historic))
 
-return(unique(df_historical_values))
+return(unique(df_historic))
 }

@@ -2,40 +2,33 @@
 % Please edit documentation in R/fetch_indices.R
 \name{fetch_indices}
 \alias{fetch_indices}
-\title{Fetch ticker stock indices based on a company name}
+\title{Fetch Financial Indices}
 \usage{
-fetch_indices(names, marketplaces = NULL)
+fetch_indices(keep_only = NULL)
 }
 \arguments{
-\item{names}{A character string representing the company name to search for.}
-
-\item{marketplaces}{(optionnal) A character string representing the marketplace(s) to consider. Default keep all the marketplace}
+\item{keep_only}{A character vector of symbols to filter the results. If NULL (default),
+no filtering is applied, and all available indices are returned.}
 }
 \value{
-A data frame with columns:
-- \code{symbol}: The stock ticker symbol from yahoo
-- \code{name}: The full company name.
-- \code{last_price}: The latest available price.
-- \code{sector_category}: The sector or industry category (if available).
-- \code{type}: The type of asset (always "stocks").
-- \code{exchange}: The stock exchange place for this stock.
-\itemize{
-\item \code{searched}: The original names searched
-}
+A data frame containing unique financial indices (currencies). The table has
+columns like \code{symbol}, \code{name}, and other relevant information, with all column names in lowercase.
+If \code{keep_only} is specified, only the matching indices are returned.
 }
 \description{
-Given companies names, the function retrieves overall stock market data
-(by searching on https://finance.yahoo.com ).
-It returns a data frame with the ticker symbol on various marketplaces
-, companies names, last price on the marketplace,
-sector/category (if available), type (always "stocks")
-, exchange marketplace name and initially searched companies names.
+This function fetches a table of financial indices (currencies) from Yahoo Finance.
+Optionally, it can filter the results to include only the specified indices.
+}
+\details{
+The function sends a request to Yahoo Finance's API to fetch a list of available currencies.
+It then processes the results and returns them as a data frame. If an internet connection is not available,
+a warning message is shown.
 }
 \examples{
-\donttest{
-fetch_indices(names = c("VOLVO", "SAAB"),  marketplaces = "STO")
-}
-}
-\seealso{
-\code{\link{get_yahoo_data}},  \code{\link{fetch_historic}}
+# Fetch all available indices
+all_indices <- fetch_indices()
+
+# Fetch only specific indices
+selected_indices <- fetch_indices(keep_only = c("USD", "EUR"))
+
 }

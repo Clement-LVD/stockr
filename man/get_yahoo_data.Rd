@@ -24,21 +24,21 @@ Valid interval are "1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "yt
 }
 \value{
 A data frame containing the historical financial data with the following columns:
-\item{volume}{\code{integer} The traded volume.}
-\item{high}{\code{numeric} The highest price for the period (default is each day).}
 \item{open}{\code{numeric} The opening price for the period (default is each day).}
-\item{low}{\code{numeric} The lowest price for the period (default is each day).}
 \item{close}{\code{numeric} The closing price for the period (default is each day).}
 \item{adjclose}{\code{numeric} The adjusted closing price on the period, which accounts for corporate actions like dividends and stock splits.}
+\item{low}{\code{numeric} The lowest price for the period (default is each day).}
+\item{high}{\code{numeric} The highest price for the period (default is each day).}
+\item{volume}{\code{integer} The traded volume.}
 \item{timestamp}{\code{integer} Unix timestamps corresponding to each data point.}
 \item{date}{\code{POSIXct} The day of the financial data point.}
-\item{currency}{The currency in which the data is reported, depending on the marketplace.}
-\item{symbol}{The stock or financial instrument symbol (e.g., "AAPL").}
-\item{longname}{The full name of the company or financial instrument.}
-\item{shortname}{The abbreviated name of the company or financial instrument.}
-\item{exchangename}{The name of the exchange marketplace where the financial instrument is listed.}
-\item{fullexchangename}{The full name of the exchange marketplace.}
-\item{timezone}{The timezone in which the data is reported.}
+\item{currency}{\code{character} The currency in which the data is reported, depending on the marketplace.}
+\item{symbol}{\code{character} The stock or financial instrument symbol (e.g., "AAPL").}
+\item{shortname}{\code{character} The abbreviated name of the company or financial instrument.}
+\item{longname}{\code{character} The full name of the company or financial instrument.}
+\item{exchangename}{\code{character} The name of the exchange marketplace where the financial instrument is listed.}
+\item{fullexchangename}{\code{character} The full name of the exchange marketplace.}
+\item{timezone}{\code{character} The timezone in which the data is reported.}
 }
 \description{
 Given the symbol of a financial value, this function retrieves historical financial data from Yahoo Finance
@@ -54,8 +54,8 @@ The function allows the user to specify a date range using start and end dates. 
 it retrieves all available data from the beginning of time (default for start) to the current date (default for end).
 }
 \examples{
-\donttest{
+
   data <- get_yahoo_data(symbol = "SAAB-B.ST", start_date = "2020-01-01", interval = "5d")
   head(data)
-  }
+
 }
