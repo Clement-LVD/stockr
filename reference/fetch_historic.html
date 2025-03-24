@@ -66,20 +66,56 @@ from finance.yahoo.com. Answer a <code>data.frame</code> with standardized colna
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame with columns:
-- <code>low</code>: Lowest value of the indice during this day.
-- <code>high</code>: Highest value of the indice during this day.
-- <code>close</code>: Value at the closing of the maketplace.
-- <code>open</code>: The value at the opening of the marketplace
-- <code>volume</code>: The volume of operation.
-- <code>adjclose</code>: The adjusted closing value.</p><ul><li><p><code>timestamp</code>: The date for these values</p></li>
-<li><p><code>date</code>: The date for these values</p></li>
-<li><p><code>symbol</code>: The original indices names searched</p></li>
-<li><p><code>shortname</code>: The name of the value</p></li>
-<li><p><code>exchangename</code>: The financial place abbreviation</p></li>
-<li><p><code>fullexchangename</code>: The full name of the financial place</p></li>
-<li><p><code>timezone</code>: The timezone, e.g., 'CET' for Central European Time</p></li>
-</ul><p>This <code>data.frame</code> have additional attributes :</p><ul><li><p><code>fetch.symbols</code>: the symbols originally asked by the user</p></li>
+    <p>A data frame containing the historical financial data with the following columns:</p>
+<dl><dt>open</dt>
+<dd><p><code>numeric</code> The opening price for the period (default is each day).</p></dd>
+
+<dt>close</dt>
+<dd><p><code>numeric</code> The closing price for the period (default is each day).</p></dd>
+
+<dt>adjclose</dt>
+<dd><p><code>numeric</code> The adjusted closing price on the period, which accounts for corporate actions like dividends and stock splits.</p></dd>
+
+<dt>low</dt>
+<dd><p><code>numeric</code> The lowest price for the period (default is each day).</p></dd>
+
+<dt>high</dt>
+<dd><p><code>numeric</code> The highest price for the period (default is each day).</p></dd>
+
+<dt>volume</dt>
+<dd><p><code>integer</code> The traded volume.</p></dd>
+
+<dt>timestamp</dt>
+<dd><p><code>integer</code> Unix timestamps corresponding to each data point.</p></dd>
+
+<dt>date</dt>
+<dd><p><code>POSIXct</code> The day of the financial data point.</p></dd>
+
+<dt>currency</dt>
+<dd><p><code>character</code> The currency in which the data is reported, depending on the marketplace.</p></dd>
+
+<dt>symbol</dt>
+<dd><p><code>character</code> The stock or financial instrument symbol (e.g., "AAPL").</p></dd>
+
+<dt>shortname</dt>
+<dd><p><code>character</code> The abbreviated name of the company or financial instrument.</p></dd>
+
+<dt>longname</dt>
+<dd><p><code>character</code> The full name of the company or financial instrument.</p></dd>
+
+<dt>exchangename</dt>
+<dd><p><code>character</code> The name of the exchange marketplace where the financial instrument is listed.</p></dd>
+
+<dt>fullexchangename</dt>
+<dd><p><code>character</code> The full name of the exchange marketplace.</p></dd>
+
+<dt>timezone</dt>
+<dd><p><code>character</code> The timezone in which the data is reported.</p></dd>
+
+</dl></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>This <code>data.frame</code> have additional attributes :</p><ul><li><p><code>fetch.symbols</code>: the symbols originally asked by the user</p></li>
 <li><p><code>fetch.date</code>: the date when data are retrieved</p></li>
 <li><p><code>fetch.currencies</code>: the currencies within the <code>data.frame</code></p></li>
 <li><p><code>n.currencies</code>: the number of currencies within the <code>data.frame</code></p></li>
@@ -91,11 +127,10 @@ from finance.yahoo.com. Answer a <code>data.frame</code> with standardized colna
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">datas</span> <span class="op">&lt;-</span> <span class="fu">fetch_historic</span><span class="op">(</span>symbols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLCAR-B.ST"</span>, <span class="st">"SAAB-B.ST"</span><span class="op">)</span> <span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">datas</span> <span class="op">&lt;-</span> <span class="fu">fetch_historic</span><span class="op">(</span>symbols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLCAR-B.ST"</span>, <span class="st">"SAAB-B.ST"</span><span class="op">)</span> <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> =&gt; 2 request(s) to Yahoo Finance (ETA :  0.5  sec')  VOLCAR-B.ST [OK]                                                                                                      SAAB-B.ST [OK]                                                                                                                                                                                                       </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> =&gt; 2 request(s) to Yahoo Finance (ETA :  0.6  sec')  VOLCAR-B.ST [OK]                                                                                                      SAAB-B.ST [OK]                                                                                                                                                                                   </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
