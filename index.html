@@ -113,12 +113,12 @@
 <code class="sourceCode R"><span><span class="co"># 1) fetch_indices (optionally filter a precise marketplace)</span></span>
 <span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu">stockr</span><span class="fu">::</span><span class="fu"><a href="reference/fetch_info_from_name.html">fetch_info_from_name</a></span><span class="op">(</span>names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VOLVO"</span>, <span class="st">"RENAULT"</span><span class="op">)</span></span>
 <span>                         , exchange <span class="op">=</span> <span class="st">"STO"</span><span class="op">)</span></span>
-<span><span class="co"># Keep only the german marketplace (BERlin) informations</span></span>
+<span><span class="co"># Keep only the swedish exchange place (STOckholm)</span></span>
 <span></span>
 <span><span class="co"># 2) Fetch historical values, given ticker symbol(s)</span></span>
 <span><span class="va">datas</span> <span class="op">&lt;-</span> <span class="fu">stockr</span><span class="fu">::</span><span class="fu"><a href="reference/fetch_historic.html">fetch_historic</a></span><span class="op">(</span>symbols <span class="op">=</span> <span class="va">indices</span><span class="op">$</span><span class="va">symbol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; =&gt; 3 request(s) to Yahoo Finance (ETA :  0.9  sec')  VOLCAR-B.ST [OK]                                                                                                      VOLV-A.ST [OK]                                                                                                      VOLV-B.ST [OK]                                                                                                    </span></span>
+<span><span class="co">#&gt; =&gt; 3 request(s) to Yahoo Finance (ETA :  0.9  sec')  VOLCAR-B.ST [OK]                                                                                                      VOLV-B.ST [OK]                                                                                                      VOLV-A.ST [OK]                                                                                                    </span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">datas</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    13668 obs. of  15 variables:</span></span>
@@ -137,7 +137,7 @@
 <span><span class="co">#&gt;  $ exchangename    : chr  "STO" "STO" "STO" "STO" ...</span></span>
 <span><span class="co">#&gt;  $ fullexchangename: chr  "Stockholm" "Stockholm" "Stockholm" "Stockholm" ...</span></span>
 <span><span class="co">#&gt;  $ timezone        : chr  "CET" "CET" "CET" "CET" ...</span></span>
-<span><span class="co">#&gt;  - attr(*, "fetch.symbols")= chr [1:3] "VOLCAR-B.ST" "VOLV-A.ST" "VOLV-B.ST"</span></span>
+<span><span class="co">#&gt;  - attr(*, "fetch.symbols")= chr [1:3] "VOLCAR-B.ST" "VOLV-B.ST" "VOLV-A.ST"</span></span>
 <span><span class="co">#&gt;  - attr(*, "fetch.date")= Date[1:1], format: "2025-03-25"</span></span>
 <span><span class="co">#&gt;  - attr(*, "fetch.currencies")= chr "SEK"</span></span>
 <span><span class="co">#&gt;  - attr(*, "n.currencies")= int 1</span></span></code></pre></div>
