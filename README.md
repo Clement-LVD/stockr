@@ -93,12 +93,12 @@ for these symbols.
 # 1) fetch_indices (optionally filter a precise marketplace)
 indices <- stockr::fetch_info_from_name(names = c("VOLVO", "RENAULT")
                          , exchange = "STO")
-# Keep only the german marketplace (BERlin) informations
+# Keep only the swedish exchange place (STOckholm)
 
 # 2) Fetch historical values, given ticker symbol(s)
 datas <- stockr::fetch_historic(symbols = indices$symbol)
 #> 
-#> => 3 request(s) to Yahoo Finance (ETA :  0.9  sec')  VOLCAR-B.ST [OK]                                                                                                      VOLV-A.ST [OK]                                                                                                      VOLV-B.ST [OK]                                                                                                    
+#> => 3 request(s) to Yahoo Finance (ETA :  0.9  sec')  VOLCAR-B.ST [OK]                                                                                                      VOLV-B.ST [OK]                                                                                                      VOLV-A.ST [OK]                                                                                                    
 
 str(datas)
 #> 'data.frame':    13668 obs. of  15 variables:
@@ -117,7 +117,7 @@ str(datas)
 #>  $ exchangename    : chr  "STO" "STO" "STO" "STO" ...
 #>  $ fullexchangename: chr  "Stockholm" "Stockholm" "Stockholm" "Stockholm" ...
 #>  $ timezone        : chr  "CET" "CET" "CET" "CET" ...
-#>  - attr(*, "fetch.symbols")= chr [1:3] "VOLCAR-B.ST" "VOLV-A.ST" "VOLV-B.ST"
+#>  - attr(*, "fetch.symbols")= chr [1:3] "VOLCAR-B.ST" "VOLV-B.ST" "VOLV-A.ST"
 #>  - attr(*, "fetch.date")= Date[1:1], format: "2025-03-25"
 #>  - attr(*, "fetch.currencies")= chr "SEK"
 #>  - attr(*, "n.currencies")= int 1
