@@ -49,11 +49,11 @@ from finance.yahoo.com. Answer a <code>data.frame</code> with standardized colna
 
 
 <dl><dt id="arg-symbols">symbols<a class="anchor" aria-label="anchor" href="#arg-symbols"></a></dt>
-<dd><p><code>character</code> A character string representing the indices to search for.</p></dd>
+<dd><p><code>character</code> A character string representing the financial indices to search for, e.g., ticker symbol(s).</p></dd>
 
 
 <dt id="arg-wait-time">wait.time<a class="anchor" aria-label="anchor" href="#arg-wait-time"></a></dt>
-<dd><p><code>double</code> A character string representing the indices to search for.</p></dd>
+<dd><p><code>double</code>, default = <code>0</code> A character string representing an additional waiting time between 2 calls to the Yahoo API.</p></dd>
 
 
 <dt id="arg--verbose">.verbose<a class="anchor" aria-label="anchor" href="#arg--verbose"></a></dt>
@@ -61,7 +61,22 @@ from finance.yahoo.com. Answer a <code>data.frame</code> with standardized colna
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Parameters passed to <code>get_yahoo_data</code> such as the <code>interval</code> between two lines, a start_date or end_date</p></dd>
+<dd><p>Arguments passed on to <code><a href="get_yahoo_data.html">get_yahoo_data</a></code></p><dl><dt><code>symbol</code></dt>
+<dd><p>A character string representing the symbol for the financial instrument (e.g., "AAPL" for Apple).</p></dd>
+
+    <dt><code>start_date</code></dt>
+<dd><p>A character string representing the start date in the format "YYYY-MM-DD". If <code>NULL</code>, data starts from 1970-01-01.</p></dd>
+
+    <dt><code>end_date</code></dt>
+<dd><p>A character string representing the end date in the format "YYYY-MM-DD". If <code>NULL</code>, data is retrieved up to the current date.</p></dd>
+
+    <dt><code>interval</code></dt>
+<dd><p>A character string representing the interval for the returned datas : default will return daily values.
+Other intervals will filter out some of these daily values, depending on the desired interval.
+Valid interval are "1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", and "max".</p></dd>
+
+
+</dl></dd>
 
 </dl></div>
     <div class="section level2">
@@ -115,7 +130,7 @@ from finance.yahoo.com. Answer a <code>data.frame</code> with standardized colna
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This <code>data.frame</code> have additional attributes :</p><ul><li><p><code>fetch.symbols</code>: the symbols originally asked by the user</p></li>
+    <p>Return a <code>data.frame</code> (see returned columns in 'Value' section) with additional attributes :</p><ul><li><p><code>fetch.symbols</code>: the symbols originally asked by the user</p></li>
 <li><p><code>fetch.date</code>: the date when data are retrieved</p></li>
 <li><p><code>fetch.currencies</code>: the currencies within the <code>data.frame</code></p></li>
 <li><p><code>n.currencies</code>: the number of currencies within the <code>data.frame</code></p></li>
