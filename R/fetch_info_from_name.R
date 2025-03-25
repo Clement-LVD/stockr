@@ -29,7 +29,7 @@
 #' @export
 fetch_info_from_name <- function(names, exchange = NULL, sector = NULL) {
 
-  if(!internet_or_not()) warning("No Internet connection. Please check your network")
+  if(!internet_or_not()) return(NA)
 
  # loop over the names#
 results <- lapply(names, function(name) {
@@ -42,7 +42,6 @@ if(!is.list(table)) return(NULL)
   table$searched <- name
      return(table)
         })
-
 
 results <- do.call(rbind, results)
 

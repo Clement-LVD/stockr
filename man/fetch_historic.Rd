@@ -7,13 +7,22 @@
 fetch_historic(symbols = c("SAAB-B.ST"), wait.time = 0, .verbose = T, ...)
 }
 \arguments{
-\item{symbols}{\code{character} A character string representing the indices to search for.}
+\item{symbols}{\code{character} A character string representing the financial indices to search for, e.g., ticker symbol(s).}
 
-\item{wait.time}{\code{double} A character string representing the indices to search for.}
+\item{wait.time}{\code{double}, default = \code{0} A character string representing an additional waiting time between 2 calls to the Yahoo API.}
 
 \item{.verbose}{\code{logical}, default = \code{TRUE}. If \code{TRUE}, send messages to the console.}
 
-\item{...}{Parameters passed to \code{get_yahoo_data} such as the \code{interval} between two lines, a start_date or end_date}
+\item{...}{
+  Arguments passed on to \code{\link[=get_yahoo_data]{get_yahoo_data}}
+  \describe{
+    \item{\code{symbol}}{A character string representing the symbol for the financial instrument (e.g., "AAPL" for Apple).}
+    \item{\code{start_date}}{A character string representing the start date in the format "YYYY-MM-DD". If \code{NULL}, data starts from 1970-01-01.}
+    \item{\code{end_date}}{A character string representing the end date in the format "YYYY-MM-DD". If \code{NULL}, data is retrieved up to the current date.}
+    \item{\code{interval}}{A character string representing the interval for the returned datas : default will return daily values.
+Other intervals will filter out some of these daily values, depending on the desired interval.
+Valid interval are "1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", and "max".}
+  }}
 }
 \value{
 A data frame containing the historical financial data with the following columns:
@@ -38,7 +47,7 @@ Given indices names (i.e. ticker symbol), the function retrieves historical stoc
 from finance.yahoo.com. Answer a \code{data.frame} with standardized colnames.
 }
 \details{
-This \code{data.frame} have additional attributes :
+Return a \code{data.frame} (see returned columns in 'Value' section) with additional attributes :
 \itemize{
 \item \code{fetch.symbols}: the symbols originally asked by the user
 \item \code{fetch.date}: the date when data are retrieved

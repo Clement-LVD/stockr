@@ -3,19 +3,19 @@
 #' Given indices names (i.e. ticker symbol), the function retrieves historical stock market data
 #' from finance.yahoo.com. Answer a `data.frame` with standardized colnames.
 #'
-#' @param symbols `character` A character string representing the indices to search for.
-#' @param wait.time `double` A character string representing the indices to search for.
+#' @param symbols `character` A character string representing the financial indices to search for, e.g., ticker symbol(s).
+#' @param wait.time `double`, default = `0` A character string representing an additional waiting time between 2 calls to the Yahoo API.
 #' @param .verbose `logical`, default = `TRUE`. If `TRUE`, send messages to the console.
-#' @param ... Parameters passed to `get_yahoo_data` such as the `interval` between two lines, a start_date or end_date
+#' @param ... Parameters passed to `get_yahoo_data`
+#' @inheritDotParams get_yahoo_data
 #' @inherit get_yahoo_data return
 #' @details
-#' This `data.frame` have additional attributes :
+#' Return a `data.frame` (see returned columns in 'Value' section) with additional attributes :
 #'  - `fetch.symbols`: the symbols originally asked by the user
 #'  - `fetch.date`: the date when data are retrieved
 #'  - `fetch.currencies`: the currencies within the `data.frame`
 #'  - `n.currencies`: the number of currencies within the `data.frame`
 #' @examples
-
 #' datas <- fetch_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )
 #'
 #' @seealso \code{\link{get_yahoo_data}}
@@ -54,12 +54,12 @@ if(is.null(returned_results)) return(NULL) #other problem such as no symbol at a
 if( all(is.na(returned_results))) return(NA)
 
    currencies = unique(returned_results$currency)
+
    returned_results <- structure(returned_results
                                  ,  fetch.symbols = symbols
                                  , fetch.date = Sys.Date()
                                  , fetch.currencies = currencies
                                  ,  n.currencies = length(currencies)
                                  )
-
    return(returned_results)
 }

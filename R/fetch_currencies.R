@@ -1,4 +1,4 @@
-#' Fetch Financial Indices
+#' Fetch Financial currencies Names
 #'
 #' This function fetches a table of financial indices (currencies) from Yahoo Finance.
 #' Optionally, it can filter the results to include only the specified indices.
@@ -16,13 +16,13 @@
 #'
 #' @examples
 #' # Fetch all available indices
-#' all_indices <- fetch_indices()
+#' all_indices <- fetch_currencies()
 #'
 #' # Fetch only specific indices
-#' selected_indices <- fetch_indices(keep_only = c("USD", "EUR"))
+#' selected_indices <- fetch_currencies(keep_only = c("USD", "EUR"))
 #'
 #' @export
-fetch_indices <- function(keep_only = NULL) {
+fetch_currencies <- function(keep_only = NULL) {
 
 
   if(!internet_or_not()) return(NA)

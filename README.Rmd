@@ -44,7 +44,7 @@ library(stockr)
 
 toyota_indices <- stockr::fetch_info_from_name(names = "TOYOTA")
 
-str(toyota_indices) # Results of the day, over all marketplaces
+head(toyota_indices, 2) # Results of the day, over all marketplaces
 ```
 
 Typically, you start by retrieving an exact ticker symbol using `stockr::fetch_info_from_name` or another way. You can then use these ticker symbols to fetch the corresponding historical financial data (see below).
@@ -56,7 +56,8 @@ Typically, you start by retrieving an exact ticker symbol using `stockr::fetch_i
 # Fetch historical values, given ticker symbol(s)
 histo <- stockr::fetch_historic(symbols = c("SAAB-B.ST", "VOLV-B.ST"), .verbose = FALSE)
 
-str(histo)
+head(histo,n =  1)
+
 ```
 
 This `data.frame` contain daily values.
@@ -79,15 +80,7 @@ str(datas)
 
 **Sources.**`stockr::fetch_info_from_name()` scrap data from https://finance.yahoo.com/lookup/ ; and `stockr::fetch_historic()` reach the Yahoo Finance API.
 
-**Role of stockr in the 'Reach Yahoo Finance from R' ecosystem.** Other packages are partially redundant with `stockr` : `quantmod` and `yahoofinancer`. 
-
-```{r echo=FALSE}
-
-procon <- data.frame(Pro = "`stockr` have the minimal amount of dependencies in this ecosystem"
-       ,    Con = "Other packages offer more functions. For example, `yahoofinancer` provides currency conversion functions, and `quantmod` offers time series data visualization methods")
-
-knitr::kable(procon)
-```
+**Role of stockr in the 'Reach Yahoo Finance from R' ecosystem.** Other packages are partially redundant with `stockr` : `quantmod` and `yahoofinancer`. `stockr` have the minimal amount of dependencies in this ecosystem, but other packages certainly offer more functions, e.g., `quantmod` offers time series data visualization methods.
 
 The `data.frame` of historical financial values returned by these packages have different properties, see below. 
 
