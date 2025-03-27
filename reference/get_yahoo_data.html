@@ -20,6 +20,11 @@ The data includes open stock price, high, low, close, volume, and adjusted close
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Get_changes.html">Get_changes</a></li>
+    <li><a class="dropdown-item" href="../articles/get_info_and_historic.html">get_info_and_historic</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/clement-LVD/stockr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -138,11 +143,11 @@ it retrieves all available data from the beginning of time (default for start) t
 <span class="r-in"><span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">get_yahoo_data</span><span class="op">(</span>symbol <span class="op">=</span> <span class="st">"SAAB-B.ST"</span>, start_date <span class="op">=</span> <span class="st">"2020-01-01"</span>, interval <span class="op">=</span> <span class="st">"5d"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     open  close adjclose    low   high  volume  timestamp                date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 84.575 85.050 80.94995 83.825 85.050 1671108 1579161600 2020-01-16 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 84.575 85.050 80.94996 83.825 85.050 1671108 1579161600 2020-01-16 08:00:00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 86.000 85.300 81.18790 84.750 86.000  888888 1579593600 2020-01-21 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 78.825 78.300 74.52535 77.925 79.350 1271576 1580457600 2020-01-31 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 81.750 83.300 79.28432 81.300 83.400 1503696 1580889600 2020-02-05 08:00:00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 79.800 77.500 73.76392 77.200 80.025 2685416 1581321600 2020-02-10 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 78.825 78.300 74.52534 77.925 79.350 1271576 1580457600 2020-01-31 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 81.750 83.300 79.28431 81.300 83.400 1503696 1580889600 2020-02-05 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 79.800 77.500 73.76391 77.200 80.025 2685416 1581321600 2020-02-10 08:00:00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 74.500 73.925 70.36126 73.900 75.000 1220424 1582185600 2020-02-20 08:00:00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   currency    symbol      shortname       longname exchangename</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      SEK SAAB-B.ST SAAB AB ser. B Saab AB (publ)          STO</span>
