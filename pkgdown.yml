@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   Get_changes: Get_changes.html
   get_info_and_historic: get_info_and_historic.html
-last_built: 2025-03-27T00:38Z
+last_built: 2025-03-27T23:59Z
 urls:
   reference: https://clement-lvd.github.io/stockr/reference
   article: https://clement-lvd.github.io/stockr/articles

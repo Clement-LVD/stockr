@@ -80,10 +80,10 @@ names, and get historical financial data for these symbols.</p>
 <span><span class="co"># 2) Fetch historical values, given ticker symbol(s)</span></span>
 <span><span class="va">datas</span> <span class="op">&lt;-</span> <span class="fu">stockr</span><span class="fu">::</span><span class="fu"><a href="../reference/get_historic.html">get_historic</a></span><span class="op">(</span>symbols <span class="op">=</span> <span class="va">indices</span><span class="op">$</span><span class="va">symbol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; =&gt; 3 request(s) to Yahoo Finance (ETA :  0.9  sec')  VOLCAR-B.ST [OK]                                                                                                      VOLV-A.ST [OK]                                                                                                      VOLV-B.ST [OK]                                                                                                    </span></span>
+<span><span class="co">#&gt; =&gt; 3 request(s) to Yahoo Finance (ETA :  0.9  sec')  VOLCAR-B.ST [OK]                                                                                                      VOLV-B.ST [OK]                                                                                                      VOLV-A.ST [OK]                                                                                                    </span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">datas</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    13674 obs. of  15 variables:</span></span>
+<span><span class="co">#&gt; 'data.frame':    13677 obs. of  15 variables:</span></span>
 <span><span class="co">#&gt;  $ open            : num  58.8 65.6 60.6 58 59.5 ...</span></span>
 <span><span class="co">#&gt;  $ close           : num  65.2 60.6 58 58.9 59.1 ...</span></span>
 <span><span class="co">#&gt;  $ adjclose        : num  65.2 60.6 58 58.9 59.1 ...</span></span>
@@ -99,12 +99,55 @@ names, and get historical financial data for these symbols.</p>
 <span><span class="co">#&gt;  $ exchangename    : chr  "STO" "STO" "STO" "STO" ...</span></span>
 <span><span class="co">#&gt;  $ fullexchangename: chr  "Stockholm" "Stockholm" "Stockholm" "Stockholm" ...</span></span>
 <span><span class="co">#&gt;  $ timezone        : chr  "CET" "CET" "CET" "CET" ...</span></span>
-<span><span class="co">#&gt;  - attr(*, "symbols")= chr [1:3] "VOLCAR-B.ST" "VOLV-A.ST" "VOLV-B.ST"</span></span>
+<span><span class="co">#&gt;  - attr(*, "symbols")= chr [1:3] "VOLCAR-B.ST" "VOLV-B.ST" "VOLV-A.ST"</span></span>
 <span><span class="co">#&gt;  - attr(*, "get.date")= Date[1:1], format: "2025-03-27"</span></span>
 <span><span class="co">#&gt;  - attr(*, "currencies")= chr "SEK"</span></span>
 <span><span class="co">#&gt;  - attr(*, "n.currencies")= int 1</span></span>
 <span><span class="co">#&gt;  - attr(*, "min.date")= POSIXct[1:1], format: "2000-01-03 08:00:00"</span></span>
-<span><span class="co">#&gt;  - attr(*, "max.date")= POSIXct[1:1], format: "2025-03-26 16:29:38"</span></span></code></pre></div>
+<span><span class="co">#&gt;  - attr(*, "max.date")= POSIXct[1:1], format: "2025-03-27 16:29:58"</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="technical-details">Technical details<a class="anchor" aria-label="anchor" href="#technical-details"></a>
+</h2>
+<p><strong>Role of stockr in the ‘Reach Yahoo Finance from R’
+ecosystem.</strong> Regarding the historical financial values associated
+with a ticker symbol returned by other packages such as
+<code>quantmod</code> and <code>yahoofinancer</code> : they have all the
+same source as <code>stockr</code>, i.e. Yahoo Finance API. Therefore,
+the returned objects have different properties, see below.</p>
+<table class="table">
+<colgroup>
+<col width="14%">
+<col width="85%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">names</th>
+<th align="left">get_historic</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">stockr</td>
+<td align="left">
+<code><a href="../reference/get_historic.html">stockr::get_historic()</a></code> return a standard
+<code>data.frame</code>
+</td>
+</tr>
+<tr class="even">
+<td align="left">yahoofinancer</td>
+<td align="left">
+<code>yahoofinancer</code> methods return an
+<code>R6</code> class object (e.g.,
+<code>Ticker$get_history</code>)</td>
+</tr>
+<tr class="odd">
+<td align="left">quantmod</td>
+<td align="left">
+<code>quantmod::getSymbols()</code> return a
+time.series (<code>xts</code> &amp; <code>zoo</code> object)</td>
+</tr>
+</tbody>
+</table>
+<!--Other packages are partially redundant with `stockr` : `quantmod` and `yahoofinancer`. `stockr` have : --><!--   - the minimal amount of dependencies in this ecosystem --><!--   - a free-text search function, i.e. `stockr::get_info_from_name()`. --><!-- Therefore, other packages certainly offer more functions, e.g., `quantmod` offers time series data visualization methods.  -->
+</div>
   </main>
 </div>
 
