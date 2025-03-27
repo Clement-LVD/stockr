@@ -33,3 +33,27 @@ datas <- stockr::get_historic(symbols = indices$symbol)
 
 str(datas)
 ```
+
+## Technical details
+
+**Role of stockr in the 'Reach Yahoo Finance from R' ecosystem.** Regarding the historical financial values associated with a ticker symbol returned by other packages such as `quantmod` and `yahoofinancer` : they have all the same source as `stockr`, i.e. Yahoo Finance API. Therefore, the returned objects have different properties, see below. 
+
+```{r echo=FALSE}
+
+deps <- data.frame(names = c("stockr", "yahoofinancer", "quantmod")
+  
+, get_historic = c("`stockr::get_historic()` return a standard `data.frame`",
+                 "`yahoofinancer` methods return an `R6` class object (e.g., `Ticker$get_history`)"
+                 , "`quantmod::getSymbols()` return a time.series (`xts` & `zoo` object)" ) )
+
+knitr::kable(deps, row.names = F)
+
+
+```
+
+<!--Other packages are partially redundant with `stockr` : `quantmod` and `yahoofinancer`. `stockr` have : -->
+
+<!--   - the minimal amount of dependencies in this ecosystem -->
+<!--   - a free-text search function, i.e. `stockr::get_info_from_name()`. -->
+
+<!-- Therefore, other packages certainly offer more functions, e.g., `quantmod` offers time series data visualization methods.  -->

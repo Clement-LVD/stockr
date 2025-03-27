@@ -11,22 +11,24 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/stockr)](https://CRAN.R-project.org/package=stockr)
 <!-- badges: end -->
 
-`stockr` is an R package that retrieve financial data from the Yahoo
-Finance API, given company names or ticker symbols[^1].
+`stockr` is an R package that retrieve financial data from Yahoo
+Finance, in order to provide historic of financial values and helper
+functions.
 
-> `stockr` functions return a standardized `data.frame` with consistent
-> column names, allowing you to focus directly on financial analysis.
+> `stockr` functions return a standardized *`data.frame`* with
+> consistent column names, allowing you to focus directly on financial
+> analysis.
 
 **Main functions.**
 
-| Function | Input | Return | Sources |
-|:---|:---|:---|:---|
-| `stockr::get_historic` | Ticker symbol(s), e.g., `'SAAB-B.ST'` | Daily historic of financial data | API\* |
-| `stockr::get_changes` | Currencies, e.g., convert from `'USD'` to `'EUR'` | Latest exchange rates | API\* |
-| `stockr::get_info_from_name` | Unstructured text value, e.g., company name(s) such as `'SAAB'` | Ticker symbols associated with the results, and latest financial insights on these symbols | Scraping<sup>†</sup> |
-| `stockr::get_indices()` |  | World financial indices and their actual values | Scraping<sup>‡</sup> |
+| Minimal.example | Input | Return |
+|:---|:---|:---|
+| `stockr::get_historic('SAAB-B.ST')` | Ticker symbol(s)[^1] | Daily historic of financial data\* |
+| `stockr::get_changes('USD', 'EUR')` | Currencies to convert : from value(s) to value(s) | Latest exchange rates\* |
+| `stockr::get_info_from_name('Saab')` | Free-text(s), e.g., company name(s) | Ticker symbol(s) and companie(s) that match the text searched, and latest financial insights<sup>†</sup> |
+| `stockr::get_indices()` |  | Major world financial indices and their actual values<sup>‡</sup> |
 
-\* : Yahoo Finance API, e.g.,
+Sources : <br>\* : Yahoo Finance API, e.g.,
 <https://query1.finance.yahoo.com/v1/finance/currencies> <br>† :
 Scraping from <https://finance.yahoo.com/lookup/> <br>‡ : Scraping from
 <https://finance.yahoo.com/markets/world-indices/>
@@ -47,19 +49,21 @@ names, search latest stock values with `stockr::get_info_from_name`.
 ``` r
 library(stockr)
 
-toyota_indices <- stockr::get_info_from_name(names = "TOYOTA")
+swed_indices <- stockr::get_info_from_name(names = c("SAAB", "VOLVO"))
 
-head(toyota_indices, 1) # Results of the day, over all marketplaces
-#>   symbol                     name last price            sector   type exchange
-#> 1     TM Toyota Motor Corporation     189.28 Consumer Cyclical Stocks      NYQ
-#>   searched
-#> 1   TOYOTA
+str(swed_indices) # Results of the day, over all marketplaces
+#> 'data.frame':    16 obs. of  7 variables:
+#>  $ symbol    : chr  "SAAB-B.ST" "SAABY" "SDV1.F" "SAABBS.XC" ...
+#>  $ name      : chr  "SAAB AB ser. B" "Saab AB" "Saab AB                       N" "Saab AB" ...
+#>  $ last price: chr  "404.30" "20.14" "37.65" "404.00" ...
+#>  $ sector    : chr  "Industrials" "Industrials" "Industrials" "Industrials" ...
+#>  $ type      : chr  "Stocks" "Stocks" "Stocks" "Stocks" ...
+#>  $ exchange  : chr  "STO" "PNK" "FRA" "CXE" ...
+#>  $ searched  : chr  "SAAB" "SAAB" "SAAB" "SAAB" ...
 ```
 
-Typically, you start by retrieving an exact ticker symbol using
-`stockr::get_info_from_name` or another way. You can then use these
-ticker symbols to fetch the corresponding historical financial data (see
-below).
+If you don’t know the ticker symbol of a financial value,
+`stockr::get_info_from_name` is a way to retrieving it.
 
 **Get historical financial data.** Given ticker symbol(s), get historic
 of financial values with `stockr::get_historic` :
@@ -70,7 +74,7 @@ of financial values with `stockr::get_historic` :
 histo <- stockr::get_historic(symbols = c("SAAB-B.ST", "VOLV-B.ST"), .verbose = FALSE)
 
 str(histo)
-#> 'data.frame':    12816 obs. of  15 variables:
+#> 'data.frame':    12818 obs. of  15 variables:
 #>  $ open            : num  18.5 17.7 17.1 17.1 16.5 ...
 #>  $ close           : num  17.4 17.1 17.1 17.1 16.9 ...
 #>  $ adjclose        : num  9.86 9.66 9.66 9.66 9.53 ...
@@ -87,28 +91,16 @@ str(histo)
 #>  $ fullexchangename: chr  "Stockholm" "Stockholm" "Stockholm" "Stockholm" ...
 #>  $ timezone        : chr  "CET" "CET" "CET" "CET" ...
 #>  - attr(*, "symbols")= chr [1:2] "SAAB-B.ST" "VOLV-B.ST"
-#>  - attr(*, "date")= Date[1:1], format: "2025-03-27"
+#>  - attr(*, "get.date")= Date[1:1], format: "2025-03-28"
 #>  - attr(*, "currencies")= chr "SEK"
 #>  - attr(*, "n.currencies")= int 1
+#>  - attr(*, "min.date")= POSIXct[1:1], format: "2000-01-03 09:00:00"
+#>  - attr(*, "max.date")= POSIXct[1:1], format: "2025-03-27 17:29:58"
 ```
 
 Each lines of this `data.frame` are daily values.
 
-## Technical details
-
-**Role of stockr in the ‘Reach Yahoo Finance from R’ ecosystem.** Other
-packages are partially redundant with `stockr` : `quantmod` and
-`yahoofinancer`. `stockr` have the minimal amount of dependencies in
-this ecosystem, but other packages certainly offer more functions, e.g.,
-`quantmod` offers time series data visualization methods.
-
-The `data.frame` of historical financial values returned by these
-packages have different properties, see below.
-
-| names | get_historic |
-|:---|:---|
-| stockr | `stockr::get_historic` return a standard `data.frame` |
-| yahoofinancer | `yahoofinancer` methods return an `R6` class object (e.g., `Ticker$get_history`) |
-| quantmod | `quantmod::getSymbols` return a time.series (`xts` & `zoo` object) |
+**Change currencies** See Vignette of
+[`stockr::get_changes()`](https://clement-lvd.github.io/stockr/articles/Get_changes.html)
 
 [^1]: <https://en.wikipedia.org/wiki/Ticker_symbol>

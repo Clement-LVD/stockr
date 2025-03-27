@@ -23,23 +23,22 @@ Sys.setlocale("LC_TIME", "en_US.UTF-8")  # En anglais
 [![CRAN status](https://www.r-pkg.org/badges/version/stockr)](https://CRAN.R-project.org/package=stockr)
 <!-- badges: end -->
 
-`stockr` is an R package that retrieve financial data from the Yahoo Finance API, given company names or ticker symbols^[https://en.wikipedia.org/wiki/Ticker_symbol].
+`stockr` is an R package that retrieve financial data from Yahoo Finance, in order to provide historic of financial values and helper functions.
 
-> `stockr` functions return a standardized `data.frame` with consistent column names, allowing you to focus directly on financial analysis.
+> `stockr` functions return a standardized *`data.frame`* with consistent column names, allowing you to focus directly on financial analysis.
 
 **Main functions.**
 
 ```{r fn, echo=FALSE}
-fn <- data.frame(Function = c("`stockr::get_historic`", "`stockr::get_changes`","`stockr::get_info_from_name`", "`stockr::get_indices()`" ) 
-                 , Input = c("Ticker symbol(s), e.g., `'SAAB-B.ST'`", "Currencies, e.g., convert from `'USD'` to `'EUR'`"
-                             , "Unstructured text value, e.g., company name(s) such as `'SAAB'`" , "")
-             , Return =  c("Daily historic of financial data", "Latest exchange rates"
-                           ,"Ticker symbols associated with the results, and latest financial insights on these symbols" , "World financial indices and their actual values")
-             , Sources = c("API*","API*","Scraping^†^","Scraping^‡^")
+fn <- data.frame(Minimal.example = c("`stockr::get_historic('SAAB-B.ST')`", "`stockr::get_changes('USD', 'EUR')`","`stockr::get_info_from_name('Saab')`", "`stockr::get_indices()`" ) 
+                 , Input = c("Ticker symbol(s)^[https://en.wikipedia.org/wiki/Ticker_symbol]", "Currencies to convert : from value(s) to value(s)"
+                             , "Free-text(s), e.g., company name(s)" , "")
+             , Return =  c("Daily historic of financial data*", "Latest exchange rates*"
+                           ,"Ticker symbol(s) and companie(s) that match the text searched, and latest financial insights^†^" , "Major world financial indices and their actual values^‡^")
           
 )
 
-knitr::kable(fn, format = "markdown", caption = "* : Yahoo Finance API, e.g., https://query1.finance.yahoo.com/v1/finance/currencies <br>† : Scraping from https://finance.yahoo.com/lookup/  <br>‡ : Scraping from https://finance.yahoo.com/markets/world-indices/")
+knitr::kable(fn, format = "markdown", caption = "Sources : <br>* : Yahoo Finance API, e.g., https://query1.finance.yahoo.com/v1/finance/currencies <br>† : Scraping from https://finance.yahoo.com/lookup/  <br>‡ : Scraping from https://finance.yahoo.com/markets/world-indices/")
 
 ```
    
@@ -59,12 +58,12 @@ devtools::install_github("clement-LVD/stockr")
 ```{r example}
 library(stockr)
 
-toyota_indices <- stockr::get_info_from_name(names = "TOYOTA")
+swed_indices <- stockr::get_info_from_name(names = c("SAAB", "VOLVO"))
 
-head(toyota_indices, 1) # Results of the day, over all marketplaces
+str(swed_indices) # Results of the day, over all marketplaces
 ```
 
-Typically, you start by retrieving an exact ticker symbol using `stockr::get_info_from_name` or another way. You can then use these ticker symbols to fetch the corresponding historical financial data (see below).
+If you don't know the ticker symbol of a financial value, `stockr::get_info_from_name` is a way to retrieving it.
 
 **Get historical financial data.**  Given ticker symbol(s), get historic of financial values with `stockr::get_historic` :
 
@@ -79,24 +78,6 @@ str(histo)
 
 Each lines of this `data.frame` are daily values.
 
-## Technical details
-
-**Role of stockr in the 'Reach Yahoo Finance from R' ecosystem.** Other packages are partially redundant with `stockr` : `quantmod` and `yahoofinancer`. `stockr` have the minimal amount of dependencies in this ecosystem, but other packages certainly offer more functions, e.g., `quantmod` offers time series data visualization methods.
-
-The `data.frame` of historical financial values returned by these packages have different properties, see below. 
-
-```{r echo=FALSE}
-
-deps <- data.frame(names = c("stockr", "yahoofinancer", "quantmod")
-  
-, get_historic = c("`stockr::get_historic` return a standard `data.frame`",
-                 "`yahoofinancer` methods return an `R6` class object (e.g., `Ticker$get_history`)"
-                 , "`quantmod::getSymbols` return a time.series (`xts` & `zoo` object)" ) )
-
-knitr::kable(deps, row.names = F)
-
-
-```
-
-
+**Change currencies** See Vignette of [`stockr::get_changes()`](https://clement-lvd.github.io/stockr/articles/Get_changes.html)
+ 
 
