@@ -1,3 +1,20 @@
+# url of yahoo api is from here. Default is V8 API
+retrieve_yahoo_api_chart_url <- function(suffix = "v8/finance/chart/"){return(paste0("https://query1.finance.yahoo.com/", suffix) )}
+
+# utility function : add a var full of na, given a list of vars
+add_missing_var_to_df <- function(df, vars, .verbose = T){
+
+  col_to_retain <- vars
+  # add fake col
+  missing_col <- setdiff(col_to_retain, colnames(df) )
+  if(length(missing_col) > 0){
+   if(.verbose) warning("\nMissing var' from the Yahoo API have been filled with NA values (i.e. ", paste0(missing_col, collapse = ", "), ")")
+     df[ , missing_col] <- NA
+  }
+  return(df)
+}
+
+# check if the user have internet
 internet_or_not <- function(url_to_ping = "https://www.google.com", timeout = 2) {
   old_timeout <- getOption("timeout")
 
@@ -27,69 +44,42 @@ return(test)
 }
 
 
+# yahoo finance API answer json :
 #' @importFrom jsonlite fromJSON
-#' @importFrom utils URLencode
-fetch_yahoo_api <- function(url, symbol){
+fetch_yahoo_api <- function(url){
 
-  url <- utils::URLencode(url)
-
-  # answer readLines raw content
-  connection <- tryCatch({
-    # Attempt to open the connection
-    url(url, open = "r")
-  }, error = function(e) {
-    # If an error occurs, print a message and return NULL
-    cat("Error: ", e$message, "\n")
-    return(NULL) # no internet or other scenario
-  }, warning = function(w) {
-    warning_message <- w$message
-    if(grep(x = warning_message, "404 Not Found")){return(NA)}
-    # a warning is most of the times an error answered by the api # cat("Warning: ", w$message, "\n")
-    return(NULL) # non existent value
-  })
-
-  if(is.na(connection)) {   return(NA)  }
-
-  if(is.null(connection)) return(NULL) # It's certainly a default from the user (e.g., don't pass the good value)
-
-  response_text <- readLines(connection, warn = F)
-
-  close(connection)
+  response_text <- try_url(url, open_mode = "r")
 
   data <- jsonlite::fromJSON(paste(response_text, collapse = ""))
 
   return(data)
 }
 
+# some page a gzip raw content :s
+# url = "https://finance.yahoo.com/markets/world-indices/"
+# open_mode = 'rb'
+# table <- fetch_yahoo_tables(url, open_mode = 'rb')
+# some pages are good old html data
+fetch_yahoo_tables <- function(url, return_all = F, open_mode = "r"){
 
-add_missing_var_to_df <- function(df, vars, .verbose = T){
+  page_html <- try_url(url,open_mode = open_mode)
 
-  col_to_retain <- vars
-  # add fake col
-  missing_col <- setdiff(col_to_retain, colnames(df) )
-  if(length(missing_col) > 0){
-   if(.verbose) warning("\nMissing var' from the Yahoo API have been filled with NA values (i.e. ", paste0(missing_col, collapse = ", "), ")")
-     df[ , missing_col] <- NA
-  }
-
-  return(df)
-
-}
-
-
-fetch_yahoo_tables <- function(url, return_all = F){
-
-  url_complete <- utils::URLencode(url)
-  # 1) read webpage HTML
-  page_source <- readLines(url_complete, warn = FALSE)
-  # Concatenate a full HTML page and read any table
-  page_html <- paste(page_source, collapse = "\n")
   # strict testing of result
   no_result <- grepl(paste0("No results for '"), page_html)
 
   if(no_result) return(NULL)
 
-  tables <-  XML::readHTMLTable(page_html,  stringsAsFactors = FALSE)
+  tables <- extract_html_tables(page_html, return_all = F)
+
+  if(is.data.frame(tables) ) colnames(tables) <- tolower(colnames(tables))
+
+return(tables)
+}
+
+#' @importFrom XML readHTMLTable
+extract_html_tables <- function(content, return_all = F){
+
+  tables <-  XML::readHTMLTable(content,  stringsAsFactors = FALSE)
 
   if(length(tables) == 0) return(NULL)
 
@@ -100,6 +90,6 @@ fetch_yahoo_tables <- function(url, return_all = F){
 
   } else {  return(NULL) }
 
-return(tables)
-}
+  return(tables)
 
+}

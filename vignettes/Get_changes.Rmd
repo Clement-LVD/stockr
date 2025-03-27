@@ -1,0 +1,47 @@
+---
+title: "Get_changes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get_changes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+**Helper functions.**
+
+- `stockr::get_currencies()` return a list of currencies symbols and names. This is helpful to understand the currencies symbols of the Yahoo Finance API, such as the `currency` column of the `data.frame` returned by `stockr::get_historic`. 
+
+- `stockr::get_changes(from = "USD", to = "EUR")` compute changes with the latest exchange rate, given currencies symbols.
+
+
+```{r currencies}
+library(stockr)
+# If you need to understand a currency symbol :
+currencies <- get_currencies(keep = c("RON",  "USD") )
+currencies
+```
+
+
+```{r changes}
+
+changes <- get_changes(from = c("RON", "USD"), to = "EUR")
+
+# print the exchange rate :
+knitr::kable(caption = "1 Romanian Leu and 1 US$ on the currency market (€)"
+,  align = 'c', changes[, c("from", "to", "regularmarketprice","date")])
+
+```
+
+<!-- --- -->
+<!-- **Technical details.** `stockr::get_changes()` behavior is similar to `paste(from, to, "-X")`. Thus : -->
+
+<!-- - it's fine to convert several value into *one* other values, and vice-versa ; -->
+<!-- - it's fine to convert a list of paired values ; -->
+<!-- - 2 list of different lengths will lead to messy results. -->

@@ -17,6 +17,20 @@ Finance API, given company names or ticker symbols[^1].
 > `stockr` functions return a standardized `data.frame` with consistent
 > column names, allowing you to focus directly on financial analysis.
 
+**Main functions.**
+
+| Function | Input | Return | Sources |
+|:---|:---|:---|:---|
+| `stockr::get_historic` | Ticker symbol(s), e.g., `'SAAB-B.ST'` | Daily historic of financial data | API\* |
+| `stockr::get_changes` | Currencies, e.g., convert from `'USD'` to `'EUR'` | Latest exchange rates | API\* |
+| `stockr::get_info_from_name` | Unstructured text value, e.g., company name(s) such as `'SAAB'` | Ticker symbols associated with the results, and latest financial insights on these symbols | Scraping<sup>†</sup> |
+| `stockr::get_indices()` |  | World financial indices and their actual values | Scraping<sup>‡</sup> |
+
+\* : Yahoo Finance API, e.g.,
+<https://query1.finance.yahoo.com/v1/finance/currencies> <br>† :
+Scraping from <https://finance.yahoo.com/lookup/> <br>‡ : Scraping from
+<https://finance.yahoo.com/markets/world-indices/>
+
 ## Installation
 
 You can install the development version of stockr:
@@ -27,91 +41,60 @@ devtools::install_github("clement-LVD/stockr")
 
 ## Examples
 
-**Fetch ticker symbol and actual values.** Given keyword(s) such
-companies names, search latest stock values with
-`stockr::fetch_info_from_name`.
+**Get ticker symbol and actual values.** Given keyword(s) such companies
+names, search latest stock values with `stockr::get_info_from_name`.
 
 ``` r
 library(stockr)
 
-toyota_indices <- stockr::fetch_info_from_name(names = "TOYOTA")
+toyota_indices <- stockr::get_info_from_name(names = "TOYOTA")
 
-head(toyota_indices, 2) # Results of the day, over all marketplaces
+head(toyota_indices, 1) # Results of the day, over all marketplaces
 #>   symbol                     name last price            sector   type exchange
-#> 1     TM Toyota Motor Corporation     193.01 Consumer Cyclical Stocks      NYQ
-#> 2 7203.T        TOYOTA MOTOR CORP   2,882.50 Consumer Cyclical Stocks      JPX
+#> 1     TM Toyota Motor Corporation     189.28 Consumer Cyclical Stocks      NYQ
 #>   searched
 #> 1   TOYOTA
-#> 2   TOYOTA
 ```
 
 Typically, you start by retrieving an exact ticker symbol using
-`stockr::fetch_info_from_name` or another way. You can then use these
+`stockr::get_info_from_name` or another way. You can then use these
 ticker symbols to fetch the corresponding historical financial data (see
 below).
 
-**Fetch historical financial data with.** Given ticker symbol(s), get
-financial values with `stockr::fetch_historic` :
+**Get historical financial data.** Given ticker symbol(s), get historic
+of financial values with `stockr::get_historic` :
 
 ``` r
 
 # Fetch historical values, given ticker symbol(s)
-histo <- stockr::fetch_historic(symbols = c("SAAB-B.ST", "VOLV-B.ST"), .verbose = FALSE)
+histo <- stockr::get_historic(symbols = c("SAAB-B.ST", "VOLV-B.ST"), .verbose = FALSE)
 
-head(histo,n =  1)
-#>       open    close adjclose      low     high volume timestamp
-#> 1 18.48825 17.44829 9.860821 16.87053 18.48825 313414 946886400
-#>                  date currency    symbol      shortname       longname
-#> 1 2000-01-03 09:00:00      SEK SAAB-B.ST SAAB AB ser. B Saab AB (publ)
-#>   exchangename fullexchangename timezone
-#> 1          STO        Stockholm      CET
-```
-
-This `data.frame` contain daily values.
-
-**Chaining examples 1 & 2.** Fetch ticker symbols associated with
-keyword(s) such as companies names, and get historical financial data
-for these symbols.
-
-``` r
-# 1) fetch_indices (optionally filter a precise marketplace)
-indices <- stockr::fetch_info_from_name(names = c("VOLVO", "RENAULT")
-                         , exchange = "STO")
-# Keep only the swedish exchange place (STOckholm)
-
-# 2) Fetch historical values, given ticker symbol(s)
-datas <- stockr::fetch_historic(symbols = indices$symbol)
-#> 
-#> => 3 request(s) to Yahoo Finance (ETA :  0.9  sec')  VOLCAR-B.ST [OK]                                                                                                      VOLV-A.ST [OK]                                                                                                      VOLV-B.ST [OK]                                                                                                    
-
-str(datas)
-#> 'data.frame':    13671 obs. of  15 variables:
-#>  $ open            : num  58.8 65.6 60.6 58 59.5 ...
-#>  $ close           : num  65.2 60.6 58 58.9 59.1 ...
-#>  $ adjclose        : num  65.2 60.6 58 58.9 59.1 ...
-#>  $ low             : num  55 59 56.6 55.8 58 ...
-#>  $ high            : num  67.4 68.4 60.8 58.9 59.9 ...
-#>  $ volume          : int  70977504 20388814 14497507 7963166 2874916 1228461 2989143 1889096 1866615 7365218 ...
-#>  $ timestamp       : int  1635490800 1635753600 1635840000 1635926400 1636012800 1636099200 1636358400 1636444800 1636531200 1636617600 ...
-#>  $ date            : POSIXct, format: "2021-10-29 09:00:00" "2021-11-01 09:00:00" ...
+str(histo)
+#> 'data.frame':    12816 obs. of  15 variables:
+#>  $ open            : num  18.5 17.7 17.1 17.1 16.5 ...
+#>  $ close           : num  17.4 17.1 17.1 17.1 16.9 ...
+#>  $ adjclose        : num  9.86 9.66 9.66 9.66 9.53 ...
+#>  $ low             : num  16.9 16.4 17.1 17.1 16.5 ...
+#>  $ high            : num  18.5 17.7 17.1 17.1 17 ...
+#>  $ volume          : int  313414 294565 0 0 313418 264509 165960 205163 151425 214397 ...
+#>  $ timestamp       : int  946886400 946972800 947059200 947145600 947232000 947491200 947577600 947664000 947750400 947836800 ...
+#>  $ date            : POSIXct, format: "2000-01-03 09:00:00" "2000-01-04 09:00:00" ...
 #>  $ currency        : chr  "SEK" "SEK" "SEK" "SEK" ...
-#>  $ symbol          : chr  "VOLCAR-B.ST" "VOLCAR-B.ST" "VOLCAR-B.ST" "VOLCAR-B.ST" ...
-#>  $ shortname       : chr  "Volvo Car AB ser. B" "Volvo Car AB ser. B" "Volvo Car AB ser. B" "Volvo Car AB ser. B" ...
-#>  $ longname        : chr  "Volvo Car AB (publ.)" "Volvo Car AB (publ.)" "Volvo Car AB (publ.)" "Volvo Car AB (publ.)" ...
+#>  $ symbol          : chr  "SAAB-B.ST" "SAAB-B.ST" "SAAB-B.ST" "SAAB-B.ST" ...
+#>  $ shortname       : chr  "SAAB AB ser. B" "SAAB AB ser. B" "SAAB AB ser. B" "SAAB AB ser. B" ...
+#>  $ longname        : chr  "Saab AB (publ)" "Saab AB (publ)" "Saab AB (publ)" "Saab AB (publ)" ...
 #>  $ exchangename    : chr  "STO" "STO" "STO" "STO" ...
 #>  $ fullexchangename: chr  "Stockholm" "Stockholm" "Stockholm" "Stockholm" ...
 #>  $ timezone        : chr  "CET" "CET" "CET" "CET" ...
-#>  - attr(*, "fetch.symbols")= chr [1:3] "VOLCAR-B.ST" "VOLV-A.ST" "VOLV-B.ST"
-#>  - attr(*, "fetch.date")= Date[1:1], format: "2025-03-26"
-#>  - attr(*, "fetch.currencies")= chr "SEK"
+#>  - attr(*, "symbols")= chr [1:2] "SAAB-B.ST" "VOLV-B.ST"
+#>  - attr(*, "date")= Date[1:1], format: "2025-03-27"
+#>  - attr(*, "currencies")= chr "SEK"
 #>  - attr(*, "n.currencies")= int 1
 ```
 
-## Technical details
+Each lines of this `data.frame` are daily values.
 
-**Sources.**`stockr::fetch_info_from_name()` scrap data from
-<https://finance.yahoo.com/lookup/> ; and `stockr::fetch_historic()`
-reach the Yahoo Finance API.
+## Technical details
 
 **Role of stockr in the ‘Reach Yahoo Finance from R’ ecosystem.** Other
 packages are partially redundant with `stockr` : `quantmod` and
@@ -122,10 +105,10 @@ this ecosystem, but other packages certainly offer more functions, e.g.,
 The `data.frame` of historical financial values returned by these
 packages have different properties, see below.
 
-| names | fetch_historic |
+| names | get_historic |
 |:---|:---|
-| stockr | `stockr::fetch_historic` return a standard `data.frame` |
+| stockr | `stockr::get_historic` return a standard `data.frame` |
 | yahoofinancer | `yahoofinancer` methods return an `R6` class object (e.g., `Ticker$get_history`) |
-| quantmod | `quantmod` return a time.series object (`quantmod::getSymbols` return a `xts` & `zoo` object) |
+| quantmod | `quantmod::getSymbols` return a time.series (`xts` & `zoo` object) |
 
 [^1]: <https://en.wikipedia.org/wiki/Ticker_symbol>

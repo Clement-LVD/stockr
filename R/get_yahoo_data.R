@@ -71,8 +71,8 @@ warning(immediate. = T, "Only one symbol should be passed and you have indicated
   }
 
 #### API request ####
-  #  construct an api request
-  url <- paste0("https://query1.finance.yahoo.com/v8/finance/chart/", symbol)
+  #  construct an api request : standard API url
+  url <- paste0(retrieve_yahoo_api_chart_url(), symbol)
 
   # add parameters in a proper list
   params <- list(

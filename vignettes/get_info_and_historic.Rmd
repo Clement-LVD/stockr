@@ -1,0 +1,35 @@
+---
+title: "get_info_and_historic"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{get_info_and_historic}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette show how to fetch data from company names and get historic financial data from Yahoo API.
+
+```{r setup}
+library(stockr)
+```
+
+Fetch ticker symbols associated with keyword(s) such as companies names, and get historical financial data for these symbols. 
+
+```{r example3}
+# 1) fetch_indices (optionally filter a precise marketplace)
+indices <- stockr::get_info_from_name(names = c("VOLVO", "RENAULT")
+                         , exchange = "STO")
+# Keep only the swedish exchange place (STOckholm)
+
+# 2) Fetch historical values, given ticker symbol(s)
+datas <- stockr::get_historic(symbols = indices$symbol)
+
+str(datas)
+```

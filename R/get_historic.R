@@ -11,16 +11,16 @@
 #' @inherit get_yahoo_data return
 #' @details
 #' Return a `data.frame` (see returned columns in 'Value' section) with additional attributes :
-#'  - `fetch.symbols`: the symbols originally asked by the user
-#'  - `fetch.date`: the date when data are retrieved
-#'  - `fetch.currencies`: the currencies within the `data.frame`
+#'  - `symbols`: the symbols originally asked by the user
+#'  - `date`: the date when data are retrieved
+#'  - `currencies`: the currencies within the `data.frame`
 #'  - `n.currencies`: the number of currencies within the `data.frame`
 #' @examples
-#' datas <- fetch_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )
+#' datas <- get_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )
 #'
 #' @seealso \code{\link{get_yahoo_data}}
 #' @export
-fetch_historic <- function(symbols = c("SAAB-B.ST"), wait.time = 0, .verbose = T, ...){
+get_historic <- function(symbols = c("SAAB-B.ST"), wait.time = 0, .verbose = T, ...){
 
   if(!internet_or_not()) return(NA)
 
@@ -56,9 +56,9 @@ if( all(is.na(returned_results))) return(NA)
    currencies = unique(returned_results$currency)
 
    returned_results <- structure(returned_results
-                                 ,  fetch.symbols = symbols
-                                 , fetch.date = Sys.Date()
-                                 , fetch.currencies = currencies
+                                 , symbols = symbols
+                                 , date = Sys.Date()
+                                 , currencies = currencies
                                  ,  n.currencies = length(currencies)
                                  )
    return(returned_results)

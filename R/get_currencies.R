@@ -3,12 +3,12 @@
 #' This function fetches a table of financial indices (currencies) from Yahoo Finance.
 #' Optionally, it can filter the results to include only the specified indices.
 #'
-#' @param keep_only A character vector of symbols to filter the results. If NULL (default),
+#' @param keep A character vector of symbols to filter the results. If NULL (default),
 #'                  no filtering is applied, and all available indices are returned.
 #'
 #' @return A data frame containing unique financial indices (currencies). The table has
 #'         columns like `symbol`, `name`, and other relevant information, with all column names in lowercase.
-#'         If `keep_only` is specified, only the matching indices are returned.
+#'         If `keep` is specified, only the matching indices are returned.
 #'
 #' @details The function sends a request to Yahoo Finance's API to fetch a list of available currencies.
 #'          It then processes the results and returns them as a data frame. If an internet connection is not available,
@@ -16,25 +16,28 @@
 #'
 #' @examples
 #' # Fetch all available indices
-#' all_indices <- fetch_currencies()
+#' all_indices <- get_currencies()
 #'
 #' # Fetch only specific indices
-#' selected_indices <- fetch_currencies(keep_only = c("USD", "EUR"))
+#' selected_indices <- get_currencies(keep = c("USD", "EUR"))
 #'
 #' @export
-fetch_currencies <- function(keep_only = NULL) {
+get_currencies <- function(keep = NULL) {
 
 
   if(!internet_or_not()) return(NA)
 
-  url <- "https://query1.finance.yahoo.com/v1/finance/currencies"
+  url <- retrieve_yahoo_api_chart_url(suffix = "v1/finance/currencies")
+  # url <- "https://query1.finance.yahoo.com/"
 
-    currencies <- fetch_yahoo_api(url)
+currencies <- fetch_yahoo_api(url)
+
+if(is.null(currencies) | is.na(currencies)) return(currencies)
 
     results <- currencies$currencies$result
 
     # filter indices
-    if(!is.null(keep_only) ) {results <- results[which(results$symbol  %in% keep_only), ]}
+    if(!is.null(keep) ) {results <- results[which(results$symbol  %in% keep), ]}
 
     colnames(results) <- tolower(colnames(results))
 

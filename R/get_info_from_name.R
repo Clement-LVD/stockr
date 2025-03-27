@@ -19,15 +19,15 @@
 #' 	- `exchange`: The stock exchange place for this stock.
 #'  - `searched`: The original names searched
 #' @examples
-#' oil <- fetch_info_from_name(names = c("TOTAL", "SHELL", "BP"), sector = "Energy")
+#' oil <- get_info_from_name(names = c("TOTAL", "SHELL", "BP"), sector = "Energy")
 #'
 #' #Get data on marketplace(s)
-#' swedish <- fetch_info_from_name(names = c("SAAB", "VOLVO"),  exchange = c("STO", "PAR"))
-#' @seealso \code{\link{get_yahoo_data}},  \code{\link{fetch_historic}}
+#' swedish <- get_info_from_name(names = c("SAAB", "VOLVO"),  exchange = c("STO", "PAR"))
+#' @seealso \code{\link{get_yahoo_data}},  \code{\link{get_historic}}
 #' @importFrom XML readHTMLTable
 #' @importFrom utils URLencode
 #' @export
-fetch_info_from_name <- function(names, exchange = NULL, sector = NULL) {
+get_info_from_name <- function(names, exchange = NULL, sector = NULL) {
 
   if(!internet_or_not()) return(NA)
 
@@ -39,7 +39,8 @@ url_complete <- paste0(base_url, name)
 # fetch yahoo data
      table <-  fetch_yahoo_tables(url_complete)
 if(!is.list(table)) return(NULL)
-  table$searched <- name
+
+     table$searched <- name
      return(table)
         })
 
