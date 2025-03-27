@@ -53,6 +53,8 @@ Return a \code{data.frame} (see returned columns in 'Value' section) with additi
 \item \code{date}: the date when data are retrieved
 \item \code{currencies}: the currencies within the \code{data.frame}
 \item \code{n.currencies}: the number of currencies within the \code{data.frame}
+\item \code{min.date}: lowest (ancient) date-value within the \code{data.frame}
+\item \code{max.date}: maximum (recent) date-value within the \code{data.frame}
 }
 }
 \examples{

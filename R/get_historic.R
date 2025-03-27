@@ -15,6 +15,8 @@
 #'  - `date`: the date when data are retrieved
 #'  - `currencies`: the currencies within the `data.frame`
 #'  - `n.currencies`: the number of currencies within the `data.frame`
+#'  - `min.date`: lowest (ancient) date-value within the `data.frame`
+#'  - `max.date`: maximum (recent) date-value within the `data.frame`
 #' @examples
 #' datas <- get_historic(symbols = c("VOLCAR-B.ST", "SAAB-B.ST") )
 #'
@@ -57,9 +59,12 @@ if( all(is.na(returned_results))) return(NA)
 
    returned_results <- structure(returned_results
                                  , symbols = symbols
-                                 , date = Sys.Date()
+                                 , get.date = Sys.Date()
                                  , currencies = currencies
                                  ,  n.currencies = length(currencies)
+                                 ,min.date = min(returned_results$date)
+                                 ,max.date = max(returned_results$date)
+
                                  )
    return(returned_results)
 }
